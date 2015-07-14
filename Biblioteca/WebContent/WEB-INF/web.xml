@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="tomcat-demo" version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+<servlet>
+	<servlet-name>SA</servlet-name>
+	<jsp-file>/pageJSP.jsp</jsp-file>
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>SA</servlet-name>
+	<url-pattern>/index</url-pattern>
+</servlet-mapping>
+
+<servlet>
+	<servlet-name>SB</servlet-name>
+	<jsp-file>/Liste.jsp</jsp-file>
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>SB</servlet-name>
+	<url-pattern>/lista</url-pattern>
+</servlet-mapping>
+
+
+<security-constraint>
+	<web-resource-collection>
+		<web-resource-name>Bine ai venit</web-resource-name>
+		<url-pattern>/*</url-pattern>
+		<http-method>GET</http-method>
+		<http-method>POST</http-method>
+	</web-resource-collection>
+	
+	<auth-constraint>
+		<role-name>bibliotecar</role-name>
+		<role-name>client</role-name>
+	</auth-constraint>
+	
+	<user-data-constraint>
+		<transport-guarantee>NONE</transport-guarantee>
+	</user-data-constraint>
+	
+</security-constraint>
+
+	<login-config>
+		<auth-method>BASIC</auth-method>
+	</login-config>
+	
+</web-app>	

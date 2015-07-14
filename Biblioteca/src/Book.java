@@ -14,12 +14,20 @@ public class Book {
 		this.nrExemplareImprumutate = 0;
 	}
 	
+	public void setAutor(String nume){
+		this.autor = nume;
+	}
+	
 	public String getAutor(){
 		return this.autor;
 	}
 	
 	public String getTitlu(){
 		return this.titlu;
+	}
+	
+	public void setTitlu(String titlu){
+		this.titlu = titlu;
 	}
 	
 	public int getExemplare(){

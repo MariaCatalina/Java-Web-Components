@@ -14,10 +14,10 @@ public class User {
 	}
 	
 	/*  */
-	public void setUser(String email,String password,ArrayList borrwedBook){
+	public void setUser(String email,String password,ArrayList<BorrowedBook> borrowedBook){
 		this.email = email;
 		this.password = password;
-		this.borrowedBook = borrwedBook;
+		this.borrowedBook = borrowedBook;
 	}
 	
 	/* inregistreaza o noua carte */
@@ -28,7 +28,7 @@ public class User {
 	}
 	
 	/* returneaza lista de carti imprumutate */
-	public ArrayList getUserBorrowed(){
+	public ArrayList<BorrowedBook> getUserBorrowed(){
 		return borrowedBook;
 	}
 }
