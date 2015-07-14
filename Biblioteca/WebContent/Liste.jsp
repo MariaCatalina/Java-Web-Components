@@ -14,9 +14,6 @@
 	<%@ page import="java.io.*" %>
 	<%@ include file="AddBooks.jsp" %>
 	
-	<jsp:useBean id="carte" class="Book"></jsp:useBean>
-	<jsp:setProperty property="*" name="carte"/>
-	
 	<%
 		ArrayList<Book> book = new ArrayList<Book>();
 		String autor = (String)request.getParameter("Autor");
