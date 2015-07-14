@@ -1,11 +1,12 @@
+package gestiune;
 
 public class BorrowedBook {
 	private String data;
-	private Book book; 
+	private MyBook book; 
 	
 	public BorrowedBook(){
 		this.data = new String();
-		this.book = new Book();
+		this.book = new MyBook();
 	}
 	
 	/* metoada inregistreaza o carte imprumutata de un user */

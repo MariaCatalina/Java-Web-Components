@@ -1,3 +1,4 @@
+package gestiune;
 import java.util.*;
 
 public class User {

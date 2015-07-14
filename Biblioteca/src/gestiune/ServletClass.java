@@ -1,3 +1,4 @@
+package gestiune;
 import java.io.*;
 
 import java.util.*;
@@ -12,7 +13,7 @@ public class ServletClass extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 		System.out.println("in metorda get");
 		
-		ArrayList<Book> book = new ArrayList();
+		ArrayList<MyBook> book = new ArrayList();
 		
 		//ServletContext c = request.getServletContext();
 		System.out.println(request.getParameter("Autor"));

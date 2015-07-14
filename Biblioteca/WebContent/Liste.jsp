@@ -12,22 +12,9 @@
 	
 	<%@ page import="java.util.*" %>
 	<%@ page import="java.io.*" %>
-	<%@ include file="AddBooks.jsp" %>
-	
-	<%
-		ArrayList<Book> book = new ArrayList<Book>();
-		String autor = (String)request.getParameter("Autor");
-		String titlu = (String)request.getParameter("Titlu");
-		
-		Book b = new Book();
-		b.setBook(autor, titlu, 5, 0);
-		book.add(b);
-	%>
 
-	<%
-		for(Book c: book)
-			out.println(c.getBook());
-	%>
+	Liste: <%= ((gestiune.Gestiune)application.getAttribute("gestiune")).print() %>
+	
 
 </body>
 </html>

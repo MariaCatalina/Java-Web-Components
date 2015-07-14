@@ -25,6 +25,9 @@
 	<url-pattern>/lista</url-pattern>
 </servlet-mapping>
 
+<listener>
+    <listener-class>gestiune.MyContextListener</listener-class>
+</listener>
 
 <security-constraint>
 	<web-resource-collection>

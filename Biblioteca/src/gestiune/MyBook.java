@@ -1,5 +1,7 @@
+package gestiune;
 
-public class Book {
+
+public class MyBook {
 	
 	private String autor;
 	private String titlu;
@@ -7,7 +9,7 @@ public class Book {
 	private int nrExemplareImprumutate;
 	
 	/* initializari */
-	public Book(){
+	public MyBook(){
 		this.autor = new String();
 		this.titlu = new String();
 		this.nrExemplare = 0;
@@ -50,8 +52,8 @@ public class Book {
 	public String getBook(){
 		String out = new String();
 		
-		out = "Autor: " + this.autor + "Titlu: " + this.titlu;
-		out += "Numar exemplare " + this.nrExemplare + "Numar exemplare imprumutate: " + this.nrExemplareImprumutate;
+		out = "Autor: " + this.autor + " Titlu: " + this.titlu;
+		out += " Numar exemplare " + this.nrExemplare + " Numar exemplare imprumutate: " + this.nrExemplareImprumutate;
 		
 		return out;
 	}
