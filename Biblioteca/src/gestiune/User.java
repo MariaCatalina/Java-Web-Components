@@ -4,27 +4,27 @@ import java.util.*;
 public class User {
 	
 	private String email;
-	private String password;
 	private ArrayList<BorrowedBook> borrowedBook;
 	
 	/* initializari */
 	public User(){
 		this.email = new String();
-		this.password =  new String();
 		this.borrowedBook = new ArrayList<BorrowedBook>();
 	}
 	
-	/*  */
-	public void setUser(String email,String password,ArrayList<BorrowedBook> borrowedBook){
+	public void setEmail(String email){
 		this.email = email;
-		this.password = password;
-		this.borrowedBook = borrowedBook;
+	}
+
+	public String getEmail(){
+		return email;
 	}
 	
-	/* inregistreaza o noua carte */
-	public void setBookBorrowed(String autor, String titlu, String data){
+	/*  */
+	public void setBorroedBook(MyBook book){
 		BorrowedBook b = new BorrowedBook();
-		b.setBookB(autor, titlu, data);
+		b.setBookB(book);
+		
 		this.borrowedBook.add(b);
 	}
 	

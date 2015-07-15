@@ -11,17 +11,34 @@
 	
 	
 	<% if (request.isUserInRole("bibliotecar")) { %>
+		<br>
+		<p style="text-indent:5em" >
 		
-		<%-- buton pentru a adauga o carte --%>
-		<form action="AddBooks.jsp" method="GET">
-			Autor: <input type="text" name="Autor">
-			Titlu: <input type="text" name="Titlu">
-			<button type="submit" >adauga
-			</button>
-		</form>
+		<strong> Meniu: </strong> 
 		
+		<ul>
+		<li><a href="AddBooks.jsp">Adauga carte noua</a></li>
+		<li><a href="DeleteBook.jsp">Sterge carte</a></li>
+		<li><a href="Liste.jsp">Listeaza cartile disponibile</a></li>
+		<li><a href="#">Listeaza cartile imprumutate</a></li>
+		</ul>
+		
+		</p>
+		
+	
 	<%} else { %>
-		sunt client 
+		<br>
+		<p style="text-indent:5em" >
+		
+		<strong> Meniu: </strong> 
+		
+		<ul>
+		<li><a href="Liste.jsp">Listeaza cartile disponibile</a></li>
+		<li><a href="#">Listeaza cartile imprumutate</a></li>
+		</ul>
+		
+		</p>
+	 
 	<%} %>
 	
 </body>

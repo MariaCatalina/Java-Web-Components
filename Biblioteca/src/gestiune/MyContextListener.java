@@ -16,8 +16,11 @@ public class MyContextListener implements ServletContextListener{
 	public void contextInitialized(ServletContextEvent event) {
 		// TODO Auto-generated method stub
 		gestiune.Gestiune g = new gestiune.Gestiune();
+		gestiune.DataTable d = new gestiune.DataTable();
+		
 		ServletContext ctx = event.getServletContext();
 		ctx.setAttribute("gestiune", g);
+		ctx.setAttribute("table",d);
 	}
 
 }
