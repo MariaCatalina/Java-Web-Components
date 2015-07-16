@@ -15,16 +15,6 @@
 	<url-pattern>/index</url-pattern>
 </servlet-mapping>
 
-<servlet>
-	<servlet-name>SB</servlet-name>
-	<jsp-file>/Liste.jsp</jsp-file>
-</servlet>
-
-<servlet-mapping>
-	<servlet-name>SB</servlet-name>
-	<url-pattern>/lista</url-pattern>
-</servlet-mapping>
-
 <listener>
     <listener-class>gestiune.MyContextListener</listener-class>
 </listener>
@@ -51,5 +41,11 @@
 	<login-config>
 		<auth-method>BASIC</auth-method>
 	</login-config>
+	
+<session-config> 
+
+  <session-timeout>10</session-timeout> 
+
+</session-config>	
 	
 </web-app>	

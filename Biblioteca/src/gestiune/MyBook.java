@@ -46,13 +46,42 @@ public class MyBook {
 		return this.nrExemplareImprumutate;
 	}
 	
+	/* metoda returnează index-ul la care a fost adaugata cartea */
 	public int getIndex(){
 		return index;
 	}
 	
-	/* metoda actualizeaza numarul de exemplare */
+	/* metoda actualizeaza numărul total exemplare care se șterg*/
+	public void deleteB(){
+		nrExemplare --;
+	}
+	
+	/* metoda actualizează numărul de exemplare împrumutate */
+	public void removeB(){
+		nrExemplareImprumutate --;
+	}
+	
+	/* metoda actualizează numarul de exemplare care se adaugă */
 	public void setNrExemplare(){
 		this.nrExemplare++;
+	}
+	
+	/* metoda verifica dacă o carte poate fi împrumutată si actualizează numarul lor */
+	public int setExImprumutate(){
+		if(nrExemplare > nrExemplareImprumutate){
+			this.nrExemplareImprumutate ++;
+			return 1;
+		}
+		else
+			return 0;
+	}
+	
+	/* metoda comparea doua cărți */
+	public boolean equalBook(MyBook b){
+		if(this.getAutor().equals(b.getAutor()) && this.getTitlu().equals(b.getTitlu()))
+			return true;
+		
+		return false;
 	}
 	
 	/* metoda inregistreaza o carte */
@@ -62,20 +91,5 @@ public class MyBook {
 		this.index ++;
 		this.nrExemplare = nrExemplare;
 		this.nrExemplareImprumutate = nrExemplareImprumutate;
-	}
-	
-	public void deleteB(){
-		nrExemplare --;
-	}
-	
-	/* metoda returneaza o carte */
-	public String getBook(){
-		String out = new String();
-		
-		out = "Autor: " + this.autor + " Titlu: " + this.titlu;
-		out += " Numar exemplare " + this.nrExemplare + " Numar exemplare imprumutate: " + this.nrExemplareImprumutate;
-		out += "\n";
-		
-		return out;
 	}
 }

@@ -5,25 +5,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Header</title>
-</head>
-<body>
-	<!--  <center> <body background="images/header.jpg" /> </center> -->
 	
-<!-- textul din dreapta care apare pe fiecare pagina -->
-	<p align="right"  />
+	<!-- textul din dreapta care apare pe fiecare pagina -->
+	
+	<p align="right" >
 	<strong>Bine ai venit! <br>
-	
+		
 	<% if (request.isUserInRole("bibliotecar")) { %>
-		Esti logat ca: Bibliotecar <br>
-		Email: <%=request.getUserPrincipal().getName() %>
+		
+			Esti logat ca: Bibliotecar <br>
+			Email: <%=request.getUserPrincipal().getName() %>
 	
 	<%} else { %>
-		Esti logat ca: Client <br>
-		Email: <%=request.getUserPrincipal().getName() %>
+			Esti logat ca: Client <br>
+			Email: <%=request.getUserPrincipal().getName() %>
 	
-	<%} %>
-	</strong>
-	</p>
+	<% } %>
 
-</body>
-</html>
+	</strong>

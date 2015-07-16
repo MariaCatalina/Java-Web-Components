@@ -10,32 +10,41 @@
 	
 	<%@ include file="DeleteBook.jsp" %>
 	
+	<%-- jsp-ul sterge cartea din structura de date în functie de parametri primiți --%>
+		
 		<br><br><br>
 			
-		<%String autor = (String)request.getParameter("Autor"); %>
-		<%String titlu = (String)request.getParameter("Titlu"); %>
-				
-		<%	gestiune.Gestiune g = ((gestiune.Gestiune)application.getAttribute("gestiune"));  
+		<%
+			String autor = (String)request.getParameter("Autor"); 
+			String titlu = (String)request.getParameter("Titlu");		
+			gestiune.Gestiune g = ((gestiune.Gestiune)application.getAttribute("gestiune")); 	
+			int result = -2;
 			
-			int result = g.deleteB(autor, titlu); 
+			if(!autor.isEmpty() && !titlu.isEmpty())
+				result = g.deleteB(autor, titlu); 
 		%>
 		<center>
 		
 		<% if(result == 1) { %>
-			 Ai sters cartea <br>
-		 <%=titlu %> de <%=autor %> <br>
+		
+			 <em>Ai șters cartea: </em> <br> <%=titlu %> <em>de </em><%=autor %> <br>
 			
 		<% } else %>
 		
 		<% if( result == 2) { %>
-				Ai sters ultimul exemplar din cartea <br>
+				
+				<em>Ai șters ultimul exemplar din cartea: </em> <br>
 				<%=titlu %> 
-				de <%=autor %> <br>
-			<% } else%>
+				<em>de <%=autor %></em> <br>
 		
-		<%	if( result == 3) { %>
-				Nu exista aceasta carte.<br>
-				Incerca din nou!
+		<% } else %>
+			<%	if( result == 3) { %>
+				
+				<em>Nu exista această carte.<br></em>
+				<em>Incercă din nou!</em>
+			
+			<% } else { %>
+					<em>Datele introduse nu sunt valide.<br> Încearcă din nou!</em>
 			<% } %>
 				
 		</center>

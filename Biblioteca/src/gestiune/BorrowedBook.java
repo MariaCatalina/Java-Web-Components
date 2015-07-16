@@ -2,25 +2,41 @@ package gestiune;
 
 import java.sql.Date;
 import java.text.*;
+import java.util.Calendar;
 
 public class BorrowedBook {
 	
 	private String date;
 	private MyBook book; 
+	private String userEmail;
 	
 	public BorrowedBook(){
 		this.date = new String();
 		this.book = new MyBook();
+		this.userEmail = new String();
+	}
+	
+	public MyBook getBook(){
+		return book;
+	}
+	
+	public String getUser(){
+		return userEmail;
+	}
+	
+	public String getDate(){
+		return date;
 	}
 	
 	/* metoada inregistreaza o carte imprumutata de un user */
-	public void setBookB(MyBook book){
+	public void setBookB(String email,MyBook book){
 		/* determina ziua curenta */
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-		Date dateT = new Date(0);
-		
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	//	Date dateT = new Date();
+		Calendar cal = Calendar.getInstance();
+		this.userEmail = email;
 		this.book = book;
-		this.date = dateFormat.format(dateT);;
+		this.date = dateFormat.format(cal.getTime());;
 	}
 	
 	/* returneaza un string cu datele cartii imprumutate */

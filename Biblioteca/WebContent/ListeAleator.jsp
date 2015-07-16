@@ -12,13 +12,15 @@
 	<%@ page import="java.util.*" %>
 	<%@ page import="java.io.*" %>
 	
-
+	<%-- jsp-ul afiseaza tabelul de cărți in ordinea introdusă --%>
+	
 	<center>
-	<% gestiune.Gestiune g = ((gestiune.Gestiune)application.getAttribute("gestiune")); %>
-	<% Hashtable<Integer,gestiune.MyBook> table = g.getList();
+		
+	<%  /* preluare date din structură */
+		gestiune.Gestiune g = ((gestiune.Gestiune)application.getAttribute("gestiune")); 
+	 	Hashtable<Integer,gestiune.MyBook> table = g.getList();
   		gestiune.MyBook book;
-  	//	application.setAttribute("table", table);
-  		%>
+  	%>
 
 	
 	<% if (request.isUserInRole("bibliotecar")) { %> 
@@ -28,40 +30,41 @@
   		
     	<th>Autor</th>
     	<th>Titlu</th> 
-    	<th>Numar total de exemplare</th>
-    	<th>Numar de exemplare imprumutate</th>
+    	<th>Număr total de exemplare</th>
+    	<th>Număr de exemplare împrumutate</th>
   	</tr>
   	
-  	<%Set<Integer> keys = table.keySet();
+  	<%	/* parcurgere și afisare în tabel */
+  		Set<Integer> keys = table.keySet();
 		Iterator<Integer> it = keys.iterator();
 	
 		while(it.hasNext()){
-		
-		book = new MyBook();
-		book = table.get(it.next());
-		%>
+			book = new MyBook();
+			book = table.get(it.next());
+	%>
 		<tr> 
-			
 			<th><%=book.getAutor() %> </th> 
 			<th><%=book.getTitlu() %> </th>
 			<th><%=book.getExemplare()%> </th>	
 			<th><%=book.getExemplareImprumutate() %> </th>
 		</tr>
+		
 		<% } %>
+		
 		</table>
 		
 	<% } else { %>	
 		
 		<table style="width:80%" border="2">
   	<tr>
-  		
     	<th>Autor</th>
     	<th>Titlu</th> 
-    	<th>Numar total de exemplare</th>
-    	<th>Numar de exemplare imprumutate</th>
+    	<th>Număr total de exemplare</th>
+    	<th>Număr de exemplare imprumutate</th>
     	<th>         </th>
   	</tr>
-  		<%Set<Integer> keys = table.keySet();
+  	<%  /* parcurgere și afișare în tabel */
+  		Set<Integer> keys = table.keySet();
 		Iterator<Integer> it = keys.iterator();
 		
 		while(it.hasNext()){
@@ -69,17 +72,18 @@
 			book = new MyBook();
 			book = table.get(it.next());
 			application.setAttribute("table", book);
-		%>
+	%>
 		<tr> 
 			<th><%=book.getAutor() %> </th> 
 			<th><%=book.getTitlu() %> </th>
 			<th><%=book.getExemplare()%> </th>	
 			<th><%=book.getExemplareImprumutate() %> </th>
 			<th> 
-			<form>
-				<input type="hidden" name="bookAutor" value="<%=book.getAutor()%>" />
-				<button type="submit" formaction="Imprumuta.jsp" >Imprumuta </button> 
-			</form> </th>
+				<form action="Imprumuta.jsp" method="post"> 
+					<input type="hidden" name="bookIndex" value="<%=book.getIndex()%>" />
+					<button type="submit">Imprumuta </button> 
+				</form>
+			</th>
 		</tr>
 		<%} %>
 	<% } %>

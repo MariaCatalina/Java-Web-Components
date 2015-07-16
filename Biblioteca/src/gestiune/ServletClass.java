@@ -18,8 +18,12 @@ public class ServletClass extends HttpServlet {
 		//ServletContext c = request.getServletContext();
 		System.out.println(request.getParameter("Autor"));
 		
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+		    session.invalidate();
+		}
 		
-//		RequestDispatcher view = request.getRequestDispatcher("/AddBooks.jsp");
-	//	view.forward(request, response);
+		RequestDispatcher view = request.getRequestDispatcher("/pageJSP.jsp");
+		view.forward(request, response);
 	}
 }

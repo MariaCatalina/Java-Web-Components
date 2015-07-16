@@ -12,31 +12,33 @@
 	<%@ page import="java.util.*" %>
 	<%@ page import="java.io.*" %>
 	
+	<%-- jsp-ul afișează lista cărtilor disponibile după autor --%>
+	
 	<center>
-	<% gestiune.Gestiune g = ((gestiune.Gestiune)application.getAttribute("gestiune")); %>
-	<% Hashtable<Integer,gestiune.MyBook> table = g.getList();
+	
+	<% 	/* preluare date din structură */
+		gestiune.Gestiune g = ((gestiune.Gestiune)application.getAttribute("gestiune")); 
+		Hashtable<Integer,gestiune.MyBook> table = g.getList();
   		gestiune.MyBook book; 
   		LinkedList<gestiune.MyBook> list = new LinkedList<gestiune.MyBook>(); 
-  			list = g.getSortByAutor();
-  			%>
+  		list = g.getSortByAutor();
+  	%>
   			
-		<% if (request.isUserInRole("bibliotecar")) { %> 
-	<table style="width:80%" border="2">
-  	<tr>
-  		
-    	<th>Autor</th>
-    	<th>Titlu</th> 
-    	<th>Numar total de exemplare</th>
-    	<th>Numar de exemplare imprumutate</th>
-  	</tr>
+	<% if (request.isUserInRole("bibliotecar")) { %> 
+		<table style="width:80%" border="2">
+  		<tr>  		
+    		<th>Autor</th>
+    		<th>Titlu</th> 
+    		<th>Număr total de exemplare</th>
+    		<th>Număr de exemplare imprumutate</th>
+  		</tr>
   	
-	<% Iterator it =  list.iterator();
+	<% 	/* parcurgere structură si afișare în tabel */
+		Iterator it =  list.iterator();
 		while(it.hasNext()){
 			book = new MyBook();
 			book = (MyBook)it.next();
-		//book = new gestiune.MyBook();
-		//book = table.get(copy);
-		%>
+	%>
 		<tr> 
 			<th><%=book.getAutor() %> </th> 
 			<th><%=book.getTitlu() %> </th>
@@ -49,33 +51,32 @@
 	<% } else { %>	
 		<table style="width:80%" border="2">
   	<tr>
-  		
     	<th>Autor</th>
     	<th>Titlu</th> 
-    	<th>Numar total de exemplare</th>
-    	<th>Numar de exemplare imprumutate</th>
+    	<th>Număr total de exemplare</th>
+    	<th>Număr de exemplare împrumutate</th>
     	<th>     </th>
   	</tr>
-  	
-  	
-  			
-  			
-	<% Iterator it =  list.iterator();
+  		
+	<% /* parcurgere structură si afișare în tabel */
+		Iterator it =  list.iterator();
 		while(it.hasNext()){
 			book = new MyBook();
 			book = (MyBook)it.next();
-		//book = new gestiune.MyBook();
-		//book = table.get(copy);
-		%>
+	%>
 		<tr> 
-			
 			<th><%=book.getAutor() %> </th> 
 			<th><%=book.getTitlu() %> </th>
 			<th><%=book.getExemplare()%> </th>	
 			<th><%=book.getExemplareImprumutate() %> </th>
-			<th> <form> <button type="submit">Imprumuta </button> </form> </th>
+			<th>
+				<form action="Imprumuta.jsp" method="post"> 
+					<input type="hidden" name="bookIndex" value="<%=book.getIndex()%>" />
+					<button type="submit">Împrumuta </button> 
+				</form>
+			</th>
 		</tr>
-<%} %>
+	<% } %>
 		</table>
 			
 	<% } %>

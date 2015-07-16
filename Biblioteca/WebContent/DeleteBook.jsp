@@ -10,7 +10,7 @@
 	<%@ include file="Header.jsp" %>
 	
 	<%-- butonul de return --%>
-	<form name="form" method="POST" >
+	<form action="index" method="POST">
 		<input type="image" src="images/return1.jpg"  width="90" height="55"  formaction="index">
 	</form>
 	
@@ -18,11 +18,12 @@
 	<p class="center">
 		
 		<br><br><br>
-		<%-- buton pentru a adauga o carte --%>
+		<%-- buton pentru a sterge o carte --%>
+		
 		<form action="DeletedBook.jsp" method="POST">
 			Autor: <input type="text" name="Autor">
 			Titlu: <input type="text" name="Titlu">
-			<button type="submit">sterge 
+			<button type="submit">șterge 
 			</button>
 		</form>
 	

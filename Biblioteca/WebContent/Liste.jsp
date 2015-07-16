@@ -15,9 +15,12 @@
 	<%@ page import="java.util.*" %>
 	<%@ page import="java.io.*" %>
 
+	<%-- jsp-ul creează butoane de afișare a listelor de cărți --%>
+	
+	<%-- butonul de return --%>
 	<br>
-	<form name="form" method="POST" >
-		<input type="image" src="images/return1.jpg"  width="100" height="67"  formaction="index">
+	<form action="index" method="POST">
+		<input type="image" src="images/return1.jpg"  width="100" height="67">
 	</form>
 	<center>
 
@@ -50,9 +53,9 @@
 </style>
   
 		<ul>
-		<li><a href="ListeAleator.jsp">Afisare aleatorore </a></li>
-		<li><a href="ListeAutor.jsp">Afisare dupa autor</a></li>
-		<li><a href="ListeTitlu.jsp">Afisare dupa titlu</a></li>
+		<li><a href="ListeAleator.jsp">Afișare aleatorore </a></li>
+		<li><a href="ListeAutor.jsp">Afișare după autor</a></li>
+		<li><a href="ListeTitlu.jsp">Afișare după titlu</a></li>
 		</ul>
 
 	</center>
