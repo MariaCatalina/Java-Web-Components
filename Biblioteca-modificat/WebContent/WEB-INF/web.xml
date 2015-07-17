@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="tomcat-demo" version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+<servlet>
+	<servlet-name>SA</servlet-name>
+	<servlet-class>servlets.ServletClass</servlet-class>
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>SA</servlet-name>
+	<url-pattern>/index</url-pattern>
+</servlet-mapping>
+
+
+<servlet>
+	<servlet-name>AddB</servlet-name>
+	<servlet-class>servlets.AddBookServelt</servlet-class>
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>AddB</servlet-name>
+	<url-pattern>/CarteAdaugata</url-pattern>
+</servlet-mapping>
+
+ <servlet>
+	<servlet-name>ListaB</servlet-name>
+	<servlet-class>servlets.ListaServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>ListaB</servlet-name>
+	<url-pattern>/ListaCarti</url-pattern>
+</servlet-mapping>
+
+ <servlet>
+	<servlet-name>ListaD</servlet-name>
+	<servlet-class>servlets.DeleteBook</servlet-class>
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>ListaD</servlet-name>
+	<url-pattern>/CarteStearsa</url-pattern>
+</servlet-mapping>
+
+ <servlet>
+	<servlet-name>ListaUser</servlet-name>
+	<servlet-class>servlets.ListaCartiUser</servlet-class>
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>ListaUser</servlet-name>
+	<url-pattern>/ListaCartiUser</url-pattern>
+</servlet-mapping>
+
+ <servlet>
+	<servlet-name>CarteImp</servlet-name>
+	<servlet-class>servlets.ImprumutaServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>CarteImp</servlet-name>
+	<url-pattern>/CarteImprumutata</url-pattern>
+</servlet-mapping>
+<listener>
+    <listener-class>listener.MyContextListener</listener-class>
+</listener>
+
+
+ <servlet>
+	<servlet-name>LCarteImp</servlet-name>
+	<servlet-class>servlets.ListaCartiImprumutate</servlet-class>
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>LCarteImp</servlet-name>
+	<url-pattern>/ListaCartiImprumutate</url-pattern>
+</servlet-mapping>
+<listener>
+    <listener-class>listener.MyContextListener</listener-class>
+</listener>
+
+
+
+<filter>
+	<filter-name>FilterA</filter-name>
+	<filter-class>filters.AuthFilter</filter-class>
+</filter>
+
+<filter-mapping>
+	<filter-name>FilterA</filter-name>
+	<url-pattern>/*</url-pattern>
+</filter-mapping>
+
+ 
+ <!-- SECURITY ROLE -->
+ <security-role>
+ 	<role-name>bibliotecar</role-name>
+ </security-role>
+
+ <security-role>
+ 	<role-name>client</role-name>
+ </security-role>
+ 
+<security-constraint>
+	<web-resource-collection>
+		<web-resource-name>Bine ai venit</web-resource-name>
+		<url-pattern>/*</url-pattern>
+		<http-method>GET</http-method>
+		<http-method>POST</http-method>
+	</web-resource-collection>
+	
+	<auth-constraint>
+		<role-name>bibliotecar</role-name>
+		<role-name>client</role-name>
+	</auth-constraint>
+	
+	<user-data-constraint>
+		<transport-guarantee>NONE</transport-guarantee>
+	</user-data-constraint>
+	
+</security-constraint>
+
+
+<security-constraint>
+
+	<web-resource-collection>
+		<web-resource-name>Bine ai venit!</web-resource-name>
+		<url-pattern>/CarteAdaugata</url-pattern>
+		<url-pattern>/AddBooks.jsp</url-pattern>
+		
+		<http-method>GET</http-method>
+		<http-method>POST</http-method>
+	</web-resource-collection>
+
+	<auth-constraint>
+		<role-name>bibliotecar</role-name>
+	</auth-constraint>
+
+	<user-data-constraint>
+		<transport-guarantee>NONE</transport-guarantee>
+	</user-data-constraint>
+	
+</security-constraint>
+
+	<login-config>
+		<auth-method>BASIC</auth-method>
+	</login-config>
+
+	
+</web-app>	
