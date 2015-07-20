@@ -19,7 +19,8 @@ public class AuthFilter implements Filter{
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
-		// TODO Auto-generated method stub
+		
+		/* filtreaza fiecare request si adauga datele despre logare */
 		
 		HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
@@ -39,14 +40,12 @@ public class AuthFilter implements Filter{
     	}
         
 		chain.doFilter(req, res);
-		
-			
+	
 	}
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
 		this.fc = config;	
 	}
-
 
 }

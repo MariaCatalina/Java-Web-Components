@@ -9,8 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ListaCartiUser extends HttpServlet{
+public class ListaServlet extends HttpServlet{
 	
+	/* metoda seteaza un atribut cu lista totala de carti pentru admin */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException,ServletException {
 		
 		ArrayList<model.MyBook> books =  new ArrayList<model.MyBook>();
@@ -18,7 +19,7 @@ public class ListaCartiUser extends HttpServlet{
 		
 		request.setAttribute("listaCompleta",books);
 		
-		RequestDispatcher view = request.getRequestDispatcher("/ListeAleator.jsp");
+		RequestDispatcher view = request.getRequestDispatcher("/ListaAdmin.jsp");
 		view.forward(request, response);
 	}
 }

@@ -65,9 +65,7 @@
 	<servlet-name>CarteImp</servlet-name>
 	<url-pattern>/CarteImprumutata</url-pattern>
 </servlet-mapping>
-<listener>
-    <listener-class>listener.MyContextListener</listener-class>
-</listener>
+
 
 
  <servlet>
@@ -79,6 +77,48 @@
 	<servlet-name>LCarteImp</servlet-name>
 	<url-pattern>/ListaCartiImprumutate</url-pattern>
 </servlet-mapping>
+
+ <servlet>
+	<servlet-name>LCartiAutor</servlet-name>
+	<servlet-class>servlets.SortareServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>LCartiAutor</servlet-name>
+	<url-pattern>/ListaSortareAutor</url-pattern>
+</servlet-mapping>
+
+ <servlet>
+	<servlet-name>LCartiTitlu</servlet-name>
+	<servlet-class>servlets.SortareTitlu</servlet-class>
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>LCartiAutor</servlet-name>
+	<url-pattern>/ListaSortareTitlu</url-pattern>
+</servlet-mapping>
+
+ <servlet>
+	<servlet-name>LSpUser</servlet-name>
+	<servlet-class>servlets.ListaSpUser</servlet-class>
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>LSpUser</servlet-name>
+	<url-pattern>/ListaCartiImprumutateUser</url-pattern>
+</servlet-mapping>
+
+
+ <servlet>
+	<servlet-name>Return</servlet-name>
+	<servlet-class>servlets.ReturneazaServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>Return</servlet-name>
+	<url-pattern>/ReturneazaCarte</url-pattern>
+</servlet-mapping>
+
 <listener>
     <listener-class>listener.MyContextListener</listener-class>
 </listener>
@@ -131,6 +171,8 @@
 		<web-resource-name>Bine ai venit!</web-resource-name>
 		<url-pattern>/CarteAdaugata</url-pattern>
 		<url-pattern>/AddBooks.jsp</url-pattern>
+		<url-pattern>/ListaCarti</url-pattern>
+		<url-pattern>/ListaCartiImprumutate</url-pattern>
 		
 		<http-method>GET</http-method>
 		<http-method>POST</http-method>

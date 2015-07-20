@@ -29,10 +29,9 @@ public class AddBookServelt extends HttpServlet {
 		if(!autor.isEmpty() && !titlu.isEmpty() && !nrE.isEmpty()){	
 			
 			nrExemplare = Integer.parseInt(nrE);
-			b.setBook(autor,titlu,nrExemplare,0);
 			
-			System.out.println(b.getAutor() + "  " + b.getTitlu() + "  ");
-		//	lg.add(b);
+			/* se adauga datele in structura */
+			b.setBook(autor,titlu,nrExemplare,0);
 			g.addB(b);
 		}
 		

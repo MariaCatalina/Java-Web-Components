@@ -31,7 +31,7 @@
 		
 		<ul>
 		<li><a href="ListaCartiUser">Listează carțile disponibile</a></li>
-		<li><a href="CartiImprumutate.jsp">Listează carțile imprumutate</a></li>
+		<li><a href="ListaCartiImprumutateUser">Listează carțile imprumutate</a></li>
 		</ul>
 	 
 	<%} %>

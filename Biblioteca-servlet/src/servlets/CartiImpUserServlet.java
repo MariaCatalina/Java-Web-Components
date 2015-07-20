@@ -14,6 +14,7 @@ import model.BorrowedBook;
 public class CartiImpUserServlet extends HttpServlet{
 
 	public void doPost(HttpServletRequest request , HttpServletResponse response) throws IOException,ServletException{
+		
 		model.DataTable table = ((model.DataTable) getServletContext().getAttribute("tableUser"));
 		
 		ArrayList<BorrowedBook> users = table.getUser();
@@ -21,8 +22,9 @@ public class CartiImpUserServlet extends HttpServlet{
 		
 		String email = (String) request.getAttribute("role");
 		
+		/* se parcurge lista de carti imprumutate si se creeaza o lista doar cu cartile user-ului curent */
 		for(BorrowedBook b : users){
-			if (b.getUser().equals(email))
+			if (b.getUserEmail().equals(email))
 				sUser.add(b);
 		}
 		

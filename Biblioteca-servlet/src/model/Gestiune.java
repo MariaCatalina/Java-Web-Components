@@ -26,27 +26,26 @@ public class Gestiune {
 	}
 
 	/**
-	 * metoda caută in listă, noua carte si o adaugă sau îi modifică numarul de exemplare 
+	 * metoda adauga in lista cartea daca ca parametru
 	 * @param b - cartea care se adaugă
 	 * @throws ConcurrentModificationException
 	 */
 	public void addB(MyBook b){
 		books.add(b);
 	}
+
+
 	/**
-	 * metoda caută in listă cartea dupa autor si titlu și o șterge
+	 * metoda caută in listă cartea dupa index si titlu și o șterge
 	 * @param autor
 	 * @param titlu
-	 * @return 1 - cartea are mai multe exemplare
-	 * 		   2 - cartea mai are un singur exemplar
-	 * 		   3 - cartea nu există
 	 */
 	public void deleteB(int index) {
-		/* caut in lista si vad daca mai sunt exemplare
-		 * daca = 1 se sterge cartea, daca > 1 se sterge doar un exemplar */
+
 		MyBook b, copy;
 		copy = new MyBook(); 
 		Iterator it = books.iterator();
+
 		while(it.hasNext()){
 			b = new MyBook();
 			b = (MyBook) it.next();
@@ -66,11 +65,15 @@ public class Gestiune {
 				books.remove(copy);
 	}
 
+	/**
+	 * metoda actualizeaza datele cand este apasat butonul imprumuta
+	 * @param index
+	 */
 	public void imprumuta(int index){
 
 		MyBook b, copy;
 		copy = new MyBook(); 
-		Iterator it = books.iterator();
+		Iterator<MyBook> it = books.iterator();
 		while(it.hasNext()){
 			b = new MyBook();
 			b = (MyBook) it.next();
@@ -79,13 +82,37 @@ public class Gestiune {
 				break;
 			}
 		}
-		
+
 		if(copy.getNrExemplare() > copy.getExemplareImprumutate()){
 			books.remove(copy);
 			copy.setExImprumutate();
 			books.add(copy);
 		}
 		//caz in care nu mai sunt exemplare
+	}
+
+	/**
+	 * metoda actualizeaza datele cand este apasat butonul returneaza
+	 * @param index
+	 */
+	public void returneaza(int index){
+		MyBook b, copy;
+		copy = new MyBook(); 
+		Iterator<MyBook> it = books.iterator();
+		while(it.hasNext()){
+			b = new MyBook();
+			b = (MyBook) it.next();
+			if( b.getIndex() == index){
+				copy = b;
+				break;
+			}
+		}
+
+		if(copy.getNrExemplare() > copy.getExemplareImprumutate()){
+			books.remove(copy);
+			copy.removeB();
+			books.add(copy);
+		}
 	}
 
 	/**
@@ -96,7 +123,7 @@ public class Gestiune {
 
 		ArrayList<MyBook> copy = new ArrayList<MyBook>();
 		copy = books;
-		
+
 		Collections.sort(copy, new Comparator<MyBook>() {   
 			@Override
 			public int compare(MyBook t1, MyBook t2) {
@@ -107,11 +134,15 @@ public class Gestiune {
 		return copy;
 	}
 
+	/**
+	 * metoda sorteaza lista dupa titlu
+	 * @return lista sortata
+	 */
 	public ArrayList<MyBook> getSortByTitlu(){
 
 		ArrayList<MyBook> copy = new ArrayList<MyBook>();
 		copy = books;
-		
+
 		Collections.sort(copy, new Comparator<MyBook>() {   
 			@Override
 			public int compare(MyBook t1, MyBook t2) {
@@ -121,5 +152,5 @@ public class Gestiune {
 
 		return copy;
 	}
-	
+
 }

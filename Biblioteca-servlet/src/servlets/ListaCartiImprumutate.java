@@ -13,6 +13,7 @@ import model.BorrowedBook;
 
 public class ListaCartiImprumutate extends HttpServlet {
 	
+	/* metoda seteaza un atribut cu lista totala de carti */
 	public void doGet(HttpServletRequest request, HttpServletResponse response )throws IOException, ServletException{
 		
 		model.DataTable table = ((model.DataTable) getServletContext().getAttribute("tableUser"));

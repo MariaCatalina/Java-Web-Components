@@ -12,10 +12,8 @@ import javax.servlet.http.*;
 public class ServletClass extends HttpServlet {
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-		
-		//response.setContentType("text/html");
-		
-		System.out.println(request.getAttribute("role"));
+	
+		/* servlet pentru pagina principala */
 		
 		RequestDispatcher view = request.getRequestDispatcher("/pageJSP.jsp");
 		view.forward(request, response);

@@ -25,8 +25,10 @@
 		<form action="CarteAdaugata" method="post">
 			Autor: <input type="text" name="Autor">
 			Titlu: <input type="text" name="Titlu"><br>
-			Nr. Exemplare: <input type="txt" name="Numar"><br>
+			Nr. Exemplare: <input type="text" name="Numar"><br>
 			<button type="submit">adaugă 
 			</button>
 		</form>
 	</center>
+</head>
+</html>

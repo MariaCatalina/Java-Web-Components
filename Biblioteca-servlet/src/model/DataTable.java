@@ -34,41 +34,22 @@ public class DataTable {
 		b.setBookB(userEmail, book);
 		users.add(b);
 	}
-	
-	
-	public BorrowedBook getBBook(MyBook b){
-		Iterator<BorrowedBook> it = users.iterator();
-		BorrowedBook copy ;
-		
-		while(it.hasNext()){
-			copy = new BorrowedBook();
-				if(copy.getBook().equalBook(b)){
-					return copy;
-				}
-		}
-		return null;
-		
-	}
-	
 	/**
-	 * metoda șterge cartea din lista de carți împrumutate
-	 * @param b
+	 * 
+	 * metoda sterge un user din lista cand este apasat butonu returneaza
+	 * @param index
 	 */
-	public synchronized void removeReturn(MyBook b){
+	public void removeUser(int index){
+
+		BorrowedBook book =  new BorrowedBook();
 	
-		BorrowedBook copy , r;
-		r = new BorrowedBook();
-	
-		Iterator<BorrowedBook> it = users.iterator();
-		/* caută în lista cartea selectată */
-		while(it.hasNext()){
-			copy = new BorrowedBook();
-			copy = it.next();
-			if(copy.getBook().equalBook(b)){
-				r = copy;
+		for(BorrowedBook copy: users){
+			if (copy.getBook().getIndex() == index){
+				book = copy;
+				break;
 			}
 		}
-		users.remove(r);
+		users.remove(book);
 	}
 
 }

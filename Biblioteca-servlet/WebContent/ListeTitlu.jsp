@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -14,25 +14,21 @@
 </head>
 <body>
 
-	<%@include file="Header.jsp" %>
-	<%@ page import="java.util.*" %>
-	<%@ page import="java.io.*" %>
-	
-	<%-- jsp-ul afiseaza tabelul de cărți in ordinea introdusă --%>
-	
+	<%@include file="Header.jsp"%>
+	<%@ page import="java.util.*"%>
+	<%@ page import="java.io.*"%>
 
-	<br>
-	<form action="index" method="get">
+	<%-- jsp-ul afișează listă de cărti sortate după titlu --%>
+		<br>
+	<form action="ListaCartiUser" method="get">
 		<input type="image" src="images/return1.jpg"  width="100" height="67">
 	</form>
-
-		<ul>
-		<li><a href="ListeAutor.jsp">Afișare după autor</a></li>
-		<li><a href="ListeTitlu.jsp">Afișare după titlu</a></li>
-		</ul>
-
-	<center>
-		<table style="width:80%" border="2">
+	
+	<% 	/* preluare date din structură */
+		
+  	%>
+  	<center>
+	<table style="width:80%" border="2">
   	<tr>
     	<th>Autor</th>
     	<th>Titlu</th> 
@@ -40,12 +36,12 @@
     	<th>Număr de exemplare imprumutate</th>
     	<th>         </th>
   	</tr>
-
-		<c:forEach items="${listaCompleta}" var="book">
-		<tr>
+  	<c:forEach items="${listaTitlu}" var="book">
+	
+		<tr> 
 			<th>${book.autor}</th> 
 			<th>${book.titlu}</th>
-		 	<th>${book.nrExemplare}</th>
+		 	<th> <c:out value="${book.nrExemplare}" /></th>
 			<th>${book.nrExemplareImprumutate}</th> 	
 			<th>
 				<form action="CarteImprumutata" method="get"> 
@@ -54,8 +50,9 @@
 				</form>
 			</th>
 		</tr>
-		</c:forEach>
-		</table>
-		</center>
+		
+	</c:forEach>
+	</table>
+	</center>
 </body>
 </html>
