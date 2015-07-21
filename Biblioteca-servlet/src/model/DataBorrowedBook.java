@@ -2,10 +2,10 @@ package model;
 
 import java.util.*;
 
-public class DataTable {
+public class DataBorrowedBook {
 	private ArrayList<BorrowedBook> users;
 	
-	public DataTable(){
+	public DataBorrowedBook(){
 		users = new ArrayList<BorrowedBook>();
 	}
 	

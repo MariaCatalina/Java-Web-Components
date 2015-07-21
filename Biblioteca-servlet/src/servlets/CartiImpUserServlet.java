@@ -15,7 +15,7 @@ public class CartiImpUserServlet extends HttpServlet{
 
 	public void doPost(HttpServletRequest request , HttpServletResponse response) throws IOException,ServletException{
 		
-		model.DataTable table = ((model.DataTable) getServletContext().getAttribute("tableUser"));
+		model.DataBorrowedBook table = ((model.DataBorrowedBook) getServletContext().getAttribute("tableUser"));
 		
 		ArrayList<BorrowedBook> users = table.getUser();
 		ArrayList<BorrowedBook> sUser = new ArrayList<BorrowedBook>();

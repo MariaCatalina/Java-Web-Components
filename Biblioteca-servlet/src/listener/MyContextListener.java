@@ -22,7 +22,7 @@ public class MyContextListener implements ServletContextListener{
 		model.Gestiune g = new model.Gestiune();
 		
 		/* clasa DataTable pentru retinerea cartilor imprumutate si returnate de client */
-		model.DataTable d = new model.DataTable();
+		model.DataBorrowedBook d = new model.DataBorrowedBook();
 		
 		ServletContext ctx = event.getServletContext();
 		

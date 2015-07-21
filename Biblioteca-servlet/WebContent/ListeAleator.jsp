@@ -6,13 +6,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <title>Biblioteca online</title>
-</head>
-<body>
 
 	<%@include file="Header.jsp" %>
 	<%@ page import="java.util.*" %>
@@ -25,12 +20,23 @@
 	<form action="index" method="get">
 		<input type="image" src="images/return1.jpg"  width="100" height="67">
 	</form>
-
-		<ul>
-		<li><a href="ListaSortareAutor">Afișare după autor</a></li>
-		<li><a href="ListaSortareTitlu">Afișare după titlu</a></li>
-		</ul>
-
+	
+	<form action="ListaCartiUser" method="get"> 
+		<input type="hidden" name="selSort" value="selDupaAutor" />
+		<button type="submit">Sortare după autor</button> 
+		
+		<input type="hidden" name="tip" value="${tip }" />
+		<button type="submit">Crescator</button>
+		
+		<input type="hidden" name="tipD" value="${tip }" />
+		<button type="submit">Descrescator</button>
+	</form>
+	
+	<form action="ListaCartiUser" method="get"> 
+		<input type="hidden" name="selSort" value="selDupaTitlu" />
+		<button type="submit">Sortare după titlu</button> 
+	</form>
+		
 	<center>
 		<table style="width:80%" border="2">
   	<tr>
@@ -38,7 +44,7 @@
     	<th>Titlu</th> 
     	<th>Număr total de exemplare</th>
     	<th>Număr de exemplare imprumutate</th>
-    	<th>         </th>
+    	<th>*Actiune*</th>
   	</tr>
 
 		<c:forEach items="${listaCompleta}" var="book">

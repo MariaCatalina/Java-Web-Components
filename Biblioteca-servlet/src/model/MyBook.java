@@ -70,8 +70,8 @@ public class MyBook {
 	}
 	
 	/* metoda actualizează numarul de exemplare care se adaugă */
-	public void setNrExemplare(){
-		this.nrExemplare++;
+	public void setNrExemplare(int nr){
+		this.nrExemplare = nr;
 	}
 	
 	/* metoda verifica dacă o carte poate fi împrumutată si actualizează numarul lor */
@@ -81,6 +81,11 @@ public class MyBook {
 			this.nrExemplareImprumutate ++;
 		}
 
+	}
+	
+	/* metoda actualizeaza numarul de exemplare al cartilor duplicate */
+	public void setDuplicat(int exemplare){
+		this.nrExemplare += exemplare;
 	}
 	
 	/* metoda comparea doua cărți */

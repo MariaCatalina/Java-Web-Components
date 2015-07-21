@@ -24,7 +24,7 @@ public class ReturneazaServlet extends HttpServlet{
 		int ind = Integer.parseInt(index);
 		
 		model.Gestiune g = (Gestiune) request.getServletContext().getAttribute("gestiune");
-		model.DataTable d = (model.DataTable) request.getServletContext().getAttribute("tableUser");
+		model.DataBorrowedBook d = (model.DataBorrowedBook) request.getServletContext().getAttribute("tableUser");
 		
 		g.returneaza(ind);
 		d.removeUser(ind);

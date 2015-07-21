@@ -18,7 +18,7 @@ public class ListaSpUser extends HttpServlet{
 
 		String email = (String) request.getAttribute("email");
 		
-		model.DataTable table = ((model.DataTable) getServletContext().getAttribute("tableUser"));
+		model.DataBorrowedBook table = ((model.DataBorrowedBook) getServletContext().getAttribute("tableUser"));
 
 		ArrayList<BorrowedBook> users = table.getUser();
 		ArrayList<BorrowedBook> lista =  new ArrayList<BorrowedBook>();
