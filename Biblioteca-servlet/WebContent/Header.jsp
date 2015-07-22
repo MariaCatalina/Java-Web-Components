@@ -1,15 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+  <!DOCTYPE HTML>
+  
+<html>
+<head>
+	<title>Biblioteca online</title>
+</head>
+<body>
 
-<title>Header</title>
-	
 	<!-- textul din dreapta care apare pe fiecare pagina -->
 	
-	<p align="right" >
-	<strong>Bine ai venit! <br>
+	<p style="text-align:right" >
 	
-		Esti logat ca: <%= request.getAttribute("role")%> <br>
+		<strong>Bine ai venit! <br>
+	
+		Ești logat ca: <%= request.getAttribute("role")%> <br>
 		Email: <%=request.getAttribute("email") %>
 	
-	</strong>
-</p>
+		</strong>
+	</p>
+

@@ -10,58 +10,63 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
-
 public class ListaCartiUser extends HttpServlet{
 
 	/* metoda seteaza un atribut cu lista de carti pentru user in functie de cerinta*/
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException,ServletException {
 
-		ArrayList<model.MyBook> books =  new ArrayList<model.MyBook>();
+		ArrayList<model.MyBook> books = new ArrayList<model.MyBook>();;
 
 		String sort = (String)request.getParameter("selSort");
-		String tip = (String)request.getParameter("tip");
+		String tip = (String)request.getParameter("tipA");
+		String tipT = (String)request.getParameter("tipT");
 
+		model.Gestiune g = ((model.Gestiune)request.getServletContext().getAttribute("gestiune"));
+		
 		/* daca nu e selectat nici un button */
 		if(sort == null){
-
-			books = ((model.Gestiune)request.getServletContext().getAttribute("gestiune")).getList();
-
+			books = g.getList();
 		}
 		else
 			/* tip == selDupaAutor -> lista sortata dupa autor */
 			if(sort.equals("selDupaAutor")){
-					
-				System.out.println("IN SORTATEA DUPA AUTOR " + request.getParameter("tipD"));
 				
-				if( ((String)request.getParameter("tip")).equals("asc")){
-
-					System.out.println("**AICI ASC **" +request.getParameter("tip"));
-					books = ((model.Gestiune)request.getServletContext().getAttribute("gestiune")).getSortByAutor();
-					
-					request.setAttribute("tip",null);
+				if(tip == null){
+					books = g.getSortByAutor();
 				}
 				else
-				if( ((String)request.getParameter("tip")).equals("desc") ){
-						
-						books = ((model.Gestiune)request.getServletContext().getAttribute("gestiune")).getSortByAutorDesc();
-						System.out.println("**AICIC DEDS *** " +request.getParameter("tipD"));
-						
-						request.setAttribute("tip",null);
+					/* este selectat butonul Crescator */
+					if(tip.equals("asc")){
+						books = g.getSortByAutor();
 					}
-					else{
-						
-						books = ((model.Gestiune)request.getServletContext().getAttribute("gestiune")).getSortByAutor();
-						request.setAttribute("tip",null);
-					}
+					else
+						/* este selectat butonul Descrescator */
+						if( tip.equals("desc") ){
+							books = g.getSortByAutor();
+							Collections.reverse(books);
+						}		
 			}
 			else{
-				System.out.println("IN SORTAREA DUPA TITLU");
 				/* tip == selDupaTitlu -> lista sortata dupa titlu */
-				if(sort.equals("selDupaTitlu"))
-					books = ((model.Gestiune)request.getServletContext().getAttribute("gestiune")).getSortByTitlu();
-
+				if(sort.equals("selDupaTitlu")){
+					
+					/* daca nu e selectat nici un buton */
+					if(tipT == null){
+						books = g.getSortByTitlu();
+					}
+					else
+						/* este selectat butonul Crescator */
+						if(tipT.equals("asc")){
+							books = g.getSortByTitlu();
+						}
+						else
+							/* este selectat butonul Descrescator */
+							if(tipT.equals("desc")){
+								books = g.getSortByTitlu();
+								Collections.reverse(books);
+							}
+				}
 			}
 
 		request.setAttribute("listaCompleta",books);

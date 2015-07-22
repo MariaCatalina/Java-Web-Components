@@ -36,7 +36,7 @@ public class DataBorrowedBook {
 	}
 	/**
 	 * 
-	 * metoda sterge un user din lista cand este apasat butonu returneaza
+	 * metoda sterge un user din lista cand este apasat butonul returneaza
 	 * @param index
 	 */
 	public void removeUser(int index){
@@ -51,5 +51,25 @@ public class DataBorrowedBook {
 		}
 		users.remove(book);
 	}
+	
+	/**
+	 * metoda sorteaza o lista de carti imprumutate dupa data
+	 * @param books
+	 * @return
+	 */
+	public ArrayList<BorrowedBook> sortByDate(ArrayList<BorrowedBook> books){
+		
+		ArrayList<BorrowedBook> copy = new ArrayList<BorrowedBook>();
+		
+		copy = books;
 
+		Collections.sort(copy, new Comparator<BorrowedBook>() {   
+			@Override
+			public int compare(BorrowedBook t1, BorrowedBook t2) {
+				return t1.getDate().compareTo(t2.getDate());
+			}
+		});
+
+		return copy;
+	}
 }

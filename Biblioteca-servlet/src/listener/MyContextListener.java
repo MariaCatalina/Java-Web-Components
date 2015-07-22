@@ -1,11 +1,6 @@
 package listener;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.servlet.http.HttpSession;
-
-import jdk.nashorn.internal.ir.RuntimeNode.Request;
+import javax.servlet.*;
 
 public class MyContextListener implements ServletContextListener{
 
@@ -21,7 +16,7 @@ public class MyContextListener implements ServletContextListener{
 		/* clasa Gestiune pentru retinerea evidentei cartilor  */
 		model.Gestiune g = new model.Gestiune();
 		
-		/* clasa DataTable pentru retinerea cartilor imprumutate si returnate de client */
+		/* clasa DataBorrowedBook pentru retinerea cartilor imprumutate si returnate de client */
 		model.DataBorrowedBook d = new model.DataBorrowedBook();
 		
 		ServletContext ctx = event.getServletContext();

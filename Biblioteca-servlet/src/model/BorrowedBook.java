@@ -1,7 +1,7 @@
 package model;
 
 import java.text.*;
-import java.util.Calendar;
+import java.util.Date;
 
 public class BorrowedBook {
 	
@@ -31,18 +31,11 @@ public class BorrowedBook {
 	public void setBookB(String email,MyBook book){
 		/* determina ziua curenta */
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	//	Date dateT = new Date();
-		Calendar cal = Calendar.getInstance();
+		Date dateT = new Date();
+		
 		this.userEmail = email;
 		this.book = book;
-		this.date = dateFormat.format(cal.getTime());;
+		this.date = dateFormat.format(dateT);;
 	}
 	
-	/* returneaza un string cu datele cartii imprumutate */
-	public String getBookB(){
-		String out = new String();
-		out = "Autor: " + book.getAutor() + "Titlu: " + book.getTitlu();
-		out += "Data imprumutarii: " + this.date; 
-		return out;
-	}
 }

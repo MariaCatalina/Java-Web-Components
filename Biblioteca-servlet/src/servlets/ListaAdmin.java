@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ListaServlet extends HttpServlet{
+public class ListaAdmin extends HttpServlet{
 	
 	/* metoda seteaza un atribut cu lista totala de carti pentru admin */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException,ServletException {

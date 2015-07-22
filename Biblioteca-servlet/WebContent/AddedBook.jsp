@@ -1,38 +1,38 @@
+<%@page import="model.MyBook"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<title>Biblioteca online</title>
-</head>
-<body>
 
 	<%@ include file="AddBooks.jsp" %>
 		
 	<%-- jsp-ul pria datele adăugate si actualizează baza de date --%>
 	
 		<br><br><br>
-		<center>
+		<div style="text-align:center" >
 			
 		<%
 			String autor = (String)request.getParameter("Autor"); 
 			String titlu = (String)request.getParameter("Titlu"); 
 			String nrE = (String)request.getParameter("Numar");
+			MyBook b = new MyBook();
 		%>
 	
 		<%	/* actualizare bază de date */
 			/* vefificare dacă datele nu sunt null */
-			if(!autor.isEmpty() && !titlu.isEmpty() && !nrE.isEmpty()){	
+			if(!autor.isEmpty() && !titlu.isEmpty() && !nrE.isEmpty() && b.verificaNrExemplare(nrE) == 0){	
 		%>	
 				<em>Ai adăugat o carte nouă </em><br> <br>
 				
 				<em>Autor: <%=autor %> </em> <br>
 				<em>Titlu: <%=titlu %> </em><br>
 				
-		<% } else { %>
-				<em>Datele introduse nu sunt valide.<br> Încearcă din nou!</em>
-		<% } %>	
+		<% } else if(autor.isEmpty() || titlu.isEmpty() || nrE.isEmpty()){ %>
 			
-		</center>
-</body>
-</html>
+				<em>Datele introduse nu sunt valide.<br> Încearcă din nou!</em>
+		
+		<% } else %>	
+		
+				<% if(b.verificaNrExemplare(nrE) == 1) { %>
+					<em>Nu ai introdus un număr valid!<br> Încearcă din nou!</em>
+				<% } %>
+			
+		</div>

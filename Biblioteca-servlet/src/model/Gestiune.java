@@ -1,7 +1,6 @@
 package model;
 
 import java.util.*;
-import java.util.Map.Entry;
 
 public class Gestiune {
 
@@ -55,9 +54,8 @@ public class Gestiune {
 		}
 	}
 
-
 	/**
-	 * metoda caută in listă cartea dupa index si titlu și o șterge
+	 * metoda caută in listă cartea dupa index și o șterge
 	 * @param autor
 	 * @param titlu
 	 */
@@ -70,19 +68,20 @@ public class Gestiune {
 		while(it.hasNext()){
 			b = new MyBook();
 			b = (MyBook) it.next();
+			
 			if( b.getIndex() == index){
 				copy = b;
 				break;
 			}
 		}
 		/* o carte imprumutata nu poate fi stearsa */
-		if( copy.getNrExemplare() > 1 && (copy.getNrExemplare() - copy.getExemplareImprumutate() > 1)){
+		if( copy.getNrExemplare() > 1 && (copy.getNrExemplare() - copy.getNrExemplareImprumutate() > 1)){
 			books.remove(copy);
 			copy.deleteB();
 			books.add(copy);
 		}
 		else
-			if(copy.getNrExemplare() == 1 && (copy.getNrExemplare() - copy.getExemplareImprumutate() == 1))
+			if(copy.getNrExemplare() == 1 && (copy.getNrExemplare() - copy.getNrExemplareImprumutate() == 1))
 				books.remove(copy);
 	}
 
@@ -103,13 +102,12 @@ public class Gestiune {
 				break;
 			}
 		}
-
-		if(copy.getNrExemplare() > copy.getExemplareImprumutate()){
+		/* se verifica daca mai sunt exemplare care pot fi imprumutate */
+		if(copy.getNrExemplare() > copy.getNrExemplareImprumutate()){
 			books.remove(copy);
 			copy.setExImprumutate();
 			books.add(copy);
 		}
-		//caz in care nu mai sunt exemplare
 	}
 
 	/**
@@ -119,17 +117,19 @@ public class Gestiune {
 	public void returneaza(int index){
 		MyBook b, copy;
 		copy = new MyBook(); 
+		
 		Iterator<MyBook> it = books.iterator();
 		while(it.hasNext()){
 			b = new MyBook();
 			b = (MyBook) it.next();
+			
 			if( b.getIndex() == index){
 				copy = b;
 				break;
 			}
 		}
 
-		if(copy.getNrExemplare() > copy.getExemplareImprumutate()){
+		if(copy.getNrExemplare() > copy.getNrExemplareImprumutate()){
 			books.remove(copy);
 			copy.removeB();
 			books.add(copy);
@@ -152,23 +152,6 @@ public class Gestiune {
 			}
 		});
 
-		return copy;
-	}
-
-	public ArrayList<MyBook> getSortByAutorDesc(){
-
-		ArrayList<MyBook> copy = new ArrayList<MyBook>();
-		copy = books;
-
-		Collections.sort(copy, new Comparator<MyBook>() {   
-			@Override
-			public int compare(MyBook t1, MyBook t2) {
-				return t1.getAutor().compareTo(t2.getAutor());
-			}
-		});
-		
-		Collections.reverse(copy);
-		
 		return copy;
 	}
 	
