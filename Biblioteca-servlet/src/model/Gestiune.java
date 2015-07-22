@@ -6,10 +6,7 @@ public class Gestiune {
 
 	ArrayList<MyBook> books;
 
-	private int index;
-
 	public Gestiune() {
-		index = 1;
 		books = new ArrayList<MyBook>();
 	}
 
@@ -18,10 +15,6 @@ public class Gestiune {
 	 */
 	public ArrayList<MyBook> getList() {
 		return books;
-	}
-
-	public int getIndex() {
-		return index;
 	}
 
 	/**
@@ -33,9 +26,9 @@ public class Gestiune {
 	public void addB(MyBook b){
 		MyBook copy = new MyBook();
 		int gasit = 0;
-		
+
 		for(MyBook book : books){
-			
+
 			if(book.getAutor().equals(b.getAutor()) && book.getTitlu().equals(b.getTitlu())){
 				copy = book;
 				gasit = 1;
@@ -68,7 +61,7 @@ public class Gestiune {
 		while(it.hasNext()){
 			b = new MyBook();
 			b = (MyBook) it.next();
-			
+
 			if( b.getIndex() == index){
 				copy = b;
 				break;
@@ -116,13 +109,14 @@ public class Gestiune {
 	 */
 	public void returneaza(int index){
 		MyBook b, copy;
-		copy = new MyBook(); 
 		
+		copy = new MyBook(); 
+
 		Iterator<MyBook> it = books.iterator();
 		while(it.hasNext()){
 			b = new MyBook();
 			b = (MyBook) it.next();
-			
+
 			if( b.getIndex() == index){
 				copy = b;
 				break;
@@ -137,39 +131,58 @@ public class Gestiune {
 	}
 
 	/**
-	 * metoda sortează lista dupa autor
+	 * metoda sortează lista dupa autor in functie de tip-ul dat
 	 * @return lista de cărti sortată
 	 */
-	public ArrayList<MyBook> getSortByAutor(){
+	public ArrayList<MyBook> getSortByAutor(String tip){
 
-		ArrayList<MyBook> copy = new ArrayList<MyBook>();
-		copy = books;
+		ArrayList<MyBook> copy = books;
+		if(tip == null || tip.equals("asc") ){
+			Collections.sort(copy, new Comparator<MyBook>() {   
+				@Override
+				public int compare(MyBook t1, MyBook t2) {
+					return t1.getAutor().compareTo(t2.getAutor());
+				}
+			});
 
-		Collections.sort(copy, new Comparator<MyBook>() {   
-			@Override
-			public int compare(MyBook t1, MyBook t2) {
-				return t1.getAutor().compareTo(t2.getAutor());
+		}else
+			if(tip.equals("desc")){
+				Collections.sort(copy, new Comparator<MyBook>() {   
+					@Override
+					public int compare(MyBook t1, MyBook t2) {
+						return t2.getAutor().compareTo(t1.getAutor());
+					}
+				});
 			}
-		});
-
 		return copy;
+
 	}
-	
+
 	/**
-	 * metoda sorteaza lista dupa titlu
+	 * metoda sorteaza lista dupa titlu in functie de tip-ul dat
 	 * @return lista sortata
 	 */
-	public ArrayList<MyBook> getSortByTitlu(){
+	public ArrayList<MyBook> getSortByTitlu(String tip){
 
-		ArrayList<MyBook> copy = new ArrayList<MyBook>();
-		copy = books;
+		ArrayList<MyBook> copy = books;
 
-		Collections.sort(copy, new Comparator<MyBook>() {   
-			@Override
-			public int compare(MyBook t1, MyBook t2) {
-				return t1.getTitlu().compareTo(t2.getTitlu());
+		if(tip == null || tip.equals("asc")){
+			Collections.sort(copy, new Comparator<MyBook>() {   
+				@Override
+				public int compare(MyBook t1, MyBook t2) {
+					return t1.getTitlu().compareTo(t2.getTitlu());
+				}
+			});
+		}
+		else
+			if(tip.equals("desc")){
+				Collections.sort(copy, new Comparator<MyBook>() {   
+					@Override
+					public int compare(MyBook t1, MyBook t2) {
+						return t2.getTitlu().compareTo(t1.getTitlu());
+					}
+				});
 			}
-		});
 
 		return copy;
 	}

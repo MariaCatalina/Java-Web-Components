@@ -3,14 +3,14 @@ package model;
 import java.util.*;
 
 public class DataBorrowedBook {
-	private ArrayList<BorrowedBook> users;
+	private ArrayList<BorrowedBook> listBBook;
 	
 	public DataBorrowedBook(){
-		users = new ArrayList<BorrowedBook>();
+		listBBook = new ArrayList<BorrowedBook>();
 	}
 	
 	public ArrayList<BorrowedBook> getUser(){
-		return users;
+		return listBBook;
 	}
 	
 	/**
@@ -32,7 +32,7 @@ public class DataBorrowedBook {
 		}
 		
 		b.setBookB(userEmail, book);
-		users.add(b);
+		listBBook.add(b);
 	}
 	/**
 	 * 
@@ -43,13 +43,13 @@ public class DataBorrowedBook {
 
 		BorrowedBook book =  new BorrowedBook();
 	
-		for(BorrowedBook copy: users){
+		for(BorrowedBook copy: listBBook){
 			if (copy.getBook().getIndex() == index){
 				book = copy;
 				break;
 			}
 		}
-		users.remove(book);
+		listBBook.remove(book);
 	}
 	
 	/**

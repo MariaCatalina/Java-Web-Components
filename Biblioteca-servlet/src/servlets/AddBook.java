@@ -20,7 +20,7 @@ public class AddBook extends HttpServlet {
 		model.Gestiune g = (model.Gestiune) request.getServletContext().getAttribute("gestiune");
 
 		/* vefificare dacă datele nu sunt null */
-		if(!autor.isEmpty() && !titlu.isEmpty() && !nrE.isEmpty() && b.verificaNrExemplare(nrE) == 0 ){	
+		if(!autor.isEmpty() && !titlu.isEmpty() && !nrE.isEmpty() && b.verificaNrExemplare(nrE)){	
 			
 				nrExemplare = Integer.parseInt(nrE);
 
@@ -39,7 +39,7 @@ public class AddBook extends HttpServlet {
 			if(!titlu.isEmpty())
 				b.setTitlu(titlu);
 			
-			if(!nrE.isEmpty() && b.verificaNrExemplare(nrE) == 0)
+			if(!nrE.isEmpty() && b.verificaNrExemplare(nrE))
 				b.setNrExemplare(Integer.parseInt(nrE));
 
 			request.setAttribute("book",b);

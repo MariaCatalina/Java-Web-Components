@@ -98,13 +98,13 @@ public class MyBook {
 	}
 	
 	/* metoda verifica daca string-ul introdus poate fi convertit in int */
-	public int verificaNrExemplare(String numar){
-		int gasit = 0;
-		for(int i = 0;i < numar.length();i++){
-			if(numar.charAt(i) <48 || numar.charAt(i) > 57)
-				gasit = 1;
+	public boolean verificaNrExemplare(String numar){
+		try {
+			Integer.parseInt(numar);
+			return true;
 		}
-		
-		return gasit;
+		catch(NumberFormatException e){
+			return false;
+		}
 	}
 }

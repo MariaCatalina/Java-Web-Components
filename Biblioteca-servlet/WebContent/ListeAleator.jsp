@@ -34,6 +34,8 @@
 		type="checkbox" name="tipT" value="desc">Descrescator
 </form>
 
+<br><br>
+
 <center>
 	<table style="width: 80%" border="2">
 		<tr>
@@ -59,6 +61,7 @@
 			</tr>
 		</c:forEach>
 	</table>
+	
 </center>
 </body>
 </html>
