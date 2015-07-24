@@ -65,13 +65,14 @@ public class ListaCartiImprumutate extends HttpServlet {
 				int nrExemplare  = rs.getInt("book_nrExemplare");
 				int nrExemplareImp = rs.getInt("book_nrExemplareImp");
 				int ind = rs.getInt("book_id");
+				int indBbook = rs.getInt("borrowedB_id");
 
 				/* adaugarea valorilor in lista pentru a fi setate ca atribut */
 				b = new model.MyBook();
 				b.setBook(autor, titlu,ind, nrExemplare, nrExemplareImp);
 				
 				bookB = new BorrowedBook();
-				bookB.setBookB(email, b, d);
+				bookB.setBookB(email, b, d,indBbook);
 
 				borrowedB.add(bookB);
 			}

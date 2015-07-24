@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Random;
 
 public class MyBook {
 
@@ -86,9 +85,7 @@ public class MyBook {
 
 	/* metoda inregistreaza o carte */
 	public void setBook(String autor,String titlu,int index, int nrExemplare, int nrExemplareImprumutate){
-		Random randomGenerator = new Random();
-		int randomInt = randomGenerator.nextInt(100);
-
+		
 		this.autor = autor;
 		this.titlu = titlu;
 		this.index = index;

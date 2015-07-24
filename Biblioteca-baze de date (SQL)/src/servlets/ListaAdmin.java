@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.http.*;
 
 public class ListaAdmin extends HttpServlet{

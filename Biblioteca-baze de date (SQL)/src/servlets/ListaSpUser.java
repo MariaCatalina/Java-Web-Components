@@ -72,14 +72,15 @@ public class ListaSpUser extends HttpServlet{
 				int nrExemplare  = rs.getInt("book_nrExemplare");
 				int nrExemplareImp = rs.getInt("book_nrExemplareImp");
 				int ind = rs.getInt("book_id");
-				Date d = rs.getDate("borrowed_date");
+				int indBbook = rs.getInt("borrowedB_id");
+				Date d = rs.getDate("borrowedB_date");
 				
 				/* adaugarea valorilor in lista pentru a fi setate ca atribut */
 				b = new model.MyBook();
 				b.setBook(autor, titlu,ind, nrExemplare, nrExemplareImp);
 				
 				bB = new model.BorrowedBook();
-				bB.setBookB(email, b,d);
+				bB.setBookB(email,b,d,indBbook);
 				
 				lista.add(bB);
 			

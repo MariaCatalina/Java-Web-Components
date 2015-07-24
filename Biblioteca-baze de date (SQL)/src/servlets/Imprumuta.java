@@ -1,51 +1,32 @@
 package servlets;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.sql.*;
+import java.text.*;
 import java.util.Date;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.*;
+import javax.servlet.http.*;
 
 
 public class Imprumuta extends HttpServlet {
-	
+
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	static final String DB_URL = "jdbc:postgresql://localhost:5432/catalina";
 
 	//  Database credentials
 	static final String USER = "postgres";
 	static final String PASS = "sql";
-	
+
 	/* metoda este apelata cand se imprumuta o carte */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException,ServletException{
-	
+
 		String index = (String)request.getParameter("bookIndexI");
 		String userEmail = (String) request.getAttribute("email");
-		
-//		int ind = Integer.parseInt(index);
-//		
-//		model.Gestiune g = (Gestiune) request.getServletContext().getAttribute("gestiune");
-//		model.DataBorrowedBook d = (model.DataBorrowedBook) request.getServletContext().getAttribute("tableUser");
-//		
-//		/* se actualizeaza lista de carti */
-//		g.imprumuta(ind);
-//		
-//		/* se adauga noau carte in lista de carti imprumutate */
-//		d.addUser(userEmail,g.getList(),ind);
-		
+
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Date dateT = new Date();
-		
+
 		Connection conn = null;
 		Statement stmt = null;
 		String sql;
@@ -59,30 +40,30 @@ public class Imprumuta extends HttpServlet {
 
 			//STEP 4: Execute a query
 			stmt = conn.createStatement();
-			
+
 			/* cautare in baza de date index-ul carti selectate pentru a lua numatrul de exemplare al cartii */
 			sql = "SELECT b.book_nrExemplare, b.book_nrExemplareImp FROM books b WHERE b.book_id = '" + index + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
-			
+
 			rs.next();
 			int nrExemplare  = rs.getInt("book_nrExemplare") ;
 			int nrExemplareImp = rs.getInt("book_nrExemplareImp");
-			
+
 			/* daca mai sunt carti care pot fi imprumutate */
 			if( nrExemplare > nrExemplareImp){
-				
+
 				/* actualizare numar de carti imprumutate */
 				sql = "UPDATE books SET book_nrExemplareImp = '" + (nrExemplareImp + 1) + "'" + "WHERE book_id = '" + index + "'";
 				stmt.executeUpdate(sql);
-				
+
 				/* actualizare tabelul cartilor imprumutate */
 				sql = "INSERT INTO borrowed_books (borrowedB_index,borrowedB_emailUser,borrowedB_date ) VALUES ('";
 				sql += index + "','" + userEmail + "','" + dateFormat.format(dateT) + "')";
 				stmt.executeUpdate(sql);
-			
+
 			}
-			
+
 			RequestDispatcher view = request.getRequestDispatcher("ListaCartiUser");
 			view.forward(request, response);
 
@@ -106,6 +87,6 @@ public class Imprumuta extends HttpServlet {
 				se.printStackTrace();
 			}//end finally try
 		}//end try
-	
+
 	}
 }

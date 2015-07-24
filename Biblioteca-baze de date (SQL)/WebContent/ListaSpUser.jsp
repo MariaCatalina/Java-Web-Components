@@ -41,7 +41,7 @@
 				<th>${user.date }</th>
 				<th>
 					<form action="ReturneazaCarte" method="get">
-						<input type="hidden" name="bookIndexR" value="${user.book.index}" />
+						<input type="hidden" name="bookIndexR" value="${user.index}" />
 						<button type="submit">Returnează</button>
 					</form>
 				</th>

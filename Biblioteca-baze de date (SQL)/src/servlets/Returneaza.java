@@ -1,16 +1,10 @@
 package servlets;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
-
-import model.Gestiune;
 
 public class Returneaza extends HttpServlet{
 
@@ -41,22 +35,20 @@ public class Returneaza extends HttpServlet{
 			stmt = conn.createStatement();
 
 			/* cautare in baza de date index-ul carti selectate pentru a lua numatrul de exemplare al cartii */
-			sql = "SELECT b.book_nrExemplareImp FROM books b WHERE b.book_id = '" + index + "'";
+			sql = "SELECT b.book_id ,b.book_nrExemplareImp FROM books b RIGHT JOIN borrowed_books bB ON b.book_id = bB.borrowedB_index  WHERE bB.borrowedB_id = '" + index + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
 
 			rs.next();
 			int nrExemplareImp  = rs.getInt("book_nrExemplareImp") ;
-
-			/* daca mai sunt carti care pot fi imprumutate */
-
+			int idBook = rs.getInt("book_id");
 
 			/* actualizare numar de carti imprumutate din tabelul books*/
-			sql = "UPDATE books SET book_nrExemplareImp = '" + (nrExemplareImp - 1) + "'" + "WHERE book_id = '" + index + "'";
+			sql = "UPDATE books SET book_nrExemplareImp = '" + (nrExemplareImp - 1) + "'" + "WHERE book_id = '" + idBook + "'";
 			stmt.executeUpdate(sql);
 
 			/* actualizare tabelul cartilor imprumutate */
-			sql = "DELETE FROM borrowed_books WHERE borrowedB_index = '" + index + "'";
+			sql = "DELETE FROM borrowed_books WHERE borrowedB_id = '" + index + "'";
 			stmt.executeUpdate(sql);
 
 			RequestDispatcher view = request.getRequestDispatcher("ListaCartiImprumutateUser");
@@ -82,9 +74,5 @@ public class Returneaza extends HttpServlet{
 				se.printStackTrace();
 			}//end finally try
 		}//end try
-
-
-
-
 	}
 }

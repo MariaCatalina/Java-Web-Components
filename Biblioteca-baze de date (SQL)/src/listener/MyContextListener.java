@@ -14,15 +14,15 @@ public class MyContextListener implements ServletContextListener{
 	public void contextInitialized(ServletContextEvent event) {
 	
 		/* clasa Gestiune pentru retinerea evidentei cartilor  */
-		model.Gestiune g = new model.Gestiune();
+	//	model.Gestiune g = new model.Gestiune();
 		
 		/* clasa DataBorrowedBook pentru retinerea cartilor imprumutate si returnate de client */
-		model.DataBorrowedBook d = new model.DataBorrowedBook();
+	//	model.DataBorrowedBook d = new model.DataBorrowedBook();
 		
-		ServletContext ctx = event.getServletContext();
+//		ServletContext ctx = event.getServletContext();
 		
-		ctx.setAttribute("gestiune", g);
-		ctx.setAttribute("tableUser",d);
+//		ctx.setAttribute("gestiune", g);
+//		ctx.setAttribute("tableUser",d);
 	}
 
 }
