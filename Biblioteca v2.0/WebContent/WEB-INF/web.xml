@@ -131,6 +131,57 @@
 	<url-pattern>/ReturneazaCarte</url-pattern>
 </servlet-mapping>
 
+<!-- butoanele de la adaugare -->
+<servlet>
+	<servlet-name>AddButton</servlet-name>
+	<jsp-file>/AddButtons.jsp</jsp-file>
+</servlet>
+<servlet-mapping>
+	<servlet-name>AddButton</servlet-name>
+	<url-pattern>/addedField</url-pattern>
+</servlet-mapping>
+
+<!-- lista de autori -->
+<servlet>
+	<servlet-name>ListAutors</servlet-name>
+	<servlet-class>servlets.AuthorsList</servlet-class>
+</servlet>
+<servlet-mapping>
+	<servlet-name>ListAutors</servlet-name>
+	<url-pattern>/ListAuthors</url-pattern>
+</servlet-mapping>
+
+<!-- buton adauga autor -->
+<servlet>
+	<servlet-name>AddAuthor</servlet-name>
+	<servlet-class>servlets.AddAuthor</servlet-class>
+</servlet>
+<servlet-mapping>
+	<servlet-name>AddAuthor</servlet-name>
+	<url-pattern>/AddAuthor</url-pattern>
+</servlet-mapping>
+
+<servlet>
+	<servlet-name>AddedAuthor</servlet-name>
+	<jsp-file>/AddedAuthor.jsp</jsp-file>
+</servlet>
+<servlet-mapping>
+	<servlet-name>AddedAuthor</servlet-name>
+	<url-pattern>/AddedAuthor</url-pattern>
+</servlet-mapping>
+
+
+<!-- url before add book -->
+<servlet>
+	<servlet-name>BAddBook</servlet-name>
+	<servlet-class>servlets.ListBeforeAddBook</servlet-class>
+</servlet>
+<servlet-mapping>
+	<servlet-name>BAddBook</servlet-name>
+	<url-pattern>/AddBook</url-pattern>
+</servlet-mapping>
+
+
 <listener>
     <listener-class>listener.MyContextListener</listener-class>
 </listener>

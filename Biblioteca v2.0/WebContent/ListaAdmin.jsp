@@ -43,6 +43,7 @@
 						<input type="hidden" name="bookIndex" value="${book.index}" />
 						<button type="submit">Șterge</button>
 					</form>
+					</th>
 			</tr>
 
 		</c:forEach>

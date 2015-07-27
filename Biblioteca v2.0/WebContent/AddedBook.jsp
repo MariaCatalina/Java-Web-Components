@@ -11,28 +11,10 @@
 			
 		<%
 			String autor = (String)request.getParameter("Autor"); 
-			String titlu = (String)request.getParameter("Titlu"); 
-			String nrE = (String)request.getParameter("Numar");
+			String titlu = (String)request.getParameter("LastName"); 
+
 			MyBook b = new MyBook();
 		%>
 	
-		<%	/* actualizare bază de date */
-			/* vefificare dacă datele nu sunt null */
-			if(!autor.isEmpty() && !titlu.isEmpty() && !nrE.isEmpty() && b.verificaNrExemplare(nrE)){	
-		%>	
-				<em>Ai adăugat o carte nouă </em><br> <br>
-				
-				<em>Autor: <%=autor %> </em> <br>
-				<em>Titlu: <%=titlu %> </em><br>
-				
-		<% } else if( autor.isEmpty() || titlu.isEmpty() || nrE.isEmpty() ){ %>
-			
-				<em>Datele introduse nu sunt valide.<br></em>
-		
-		<% } else %>	
-		
-				<% if(!b.verificaNrExemplare(nrE)) { %>
-					<em>Nu ai introdus un număr valid!<br> Încearcă din nou!</em>
-				<% } %>
 			
 		</div>
