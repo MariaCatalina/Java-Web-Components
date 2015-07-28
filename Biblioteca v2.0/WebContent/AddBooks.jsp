@@ -1,4 +1,5 @@
-<%@page import="services.AuthorService"%>
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -9,6 +10,7 @@
 
 	<%@ include file="pageJSP.jsp" %>
 	<%@ page import="java.util.*" %>
+<%@page import="model.Author"%>
 	
 	<%-- jsp-ul creează pagina de adăugare a cărtilor --%>	
 <br><br>
@@ -18,18 +20,20 @@
 		<br><br><br>
 		<%-- buton pentru a adauga o carte --%>
 
-		<form action="CarteAdaugata" method="get">
-			Autor:
+	<jsp:useBean id="AuthorsListAttribute" type="java.util.ArrayList<Author>" scope="request"></jsp:useBean>
 			
-			<select multiple="multiple" name="autor"> 
-		
-			<c:forEach items="listA" var="var">
+			<jsp:getProperty property="*" name="AuthorsListAttribute"/>
+			
+
+		<form action="CarteAdaugata" method="get">
+			Autor:<br>
+
+			<c:forEach items="${AuthorsListAttribute}" var="var">
 				
-				${var.firstName }
+				${var.firstName} 
 				
 			</c:forEach>
-			</select>
-		
+	
 		
 			<button type="submit">adaugă 
 			</button>

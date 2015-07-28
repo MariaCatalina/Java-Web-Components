@@ -8,15 +8,10 @@
 
 
 
-<%@ include file="Header.jsp"%>
+<%@ include file="pageJSP.jsp"%>
 <%@ page import="java.util.*"%>
 
 <%-- jsp-ul creează pagina de adăugare a cărtilor --%>
-
-<%-- butonul de return --%>
-<form action="index" method="post">
-	<input type="image" src="images/return1.jpg" width="90" height="55">
-</form>
 
 <br>
 
@@ -34,7 +29,7 @@
 		<c:forEach items="${listaCompleta}" var="book">
 
 			<tr>
-				<th>${book.autor}</th>
+				<th>${book.autor.firstName} ${book.autor.lastName }</th>
 				<th>${book.titlu}</th>
 				<th><c:out value="${book.nrExemplare}" /></th>
 				<th>${book.nrExemplareImprumutate}</th>

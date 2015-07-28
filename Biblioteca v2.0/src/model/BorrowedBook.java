@@ -7,21 +7,21 @@ public class BorrowedBook {
 	private int index;
 	private Date date;
 	private MyBook book; 
-	private String userEmail;
+	private User user;
 	
 	public BorrowedBook(){
 		this.index = 0;
 		this.date = new Date();
 		this.book = new MyBook();
-		this.userEmail = new String();
+		this.user = new User();
 	}
 	
 	public MyBook getBook(){
 		return book;
 	}
 	
-	public String getUserEmail(){
-		return userEmail;
+	public User getUser(){
+		return user;
 	}
 	
 	public Date getDate(){
@@ -32,11 +32,11 @@ public class BorrowedBook {
 		return index;
 	}
 	/* metoada inregistreaza o carte imprumutata de un user */
-	public void setBookB(String email,MyBook book, Date data, int index){
+	public void setBookB(User user,MyBook book, int index){
 	
-		this.userEmail = email;
+		this.user = user;
 		this.book = book;
-		this.date = data;
+	//	this.date = data;
 		this.index = index;
 	}
 	

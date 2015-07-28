@@ -6,16 +6,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 
-<%-- jsp-ul creeaza pagina cu tablelul unde sunt afișate datele despre carțile împrumutate --%>
 
-<%@ include file="Header.jsp"%>
+
+<%@ include file="pageJSP.jsp"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.io.*"%>
 
+	<%-- jsp-ul creeaza pagina cu tablelul unde sunt afișate datele despre carțile împrumutate --%>
+	
 <br>
-<form action="index" method="post">
-	<input type="image" src="images/return1.jpg" width="100" height="67">
-</form>
 
 <center>
 	<table style="width: 80%" border="2">
@@ -23,17 +22,17 @@
 
 			<th>Autor</th>
 			<th>Titlu</th>
-			<th>Email client</th>
+			<th>Nume client</th>
 			<th>Data împrumutării</th>
 		</tr>
 
-		<c:forEach items="${listaImp}" var="user">
+		<c:forEach items="${listaImp}" var="list">
 
 			<tr>
-				<th>${user.book.autor}</th>
-				<th>${user.book.titlu}</th>
-				<th>${user.userEmail}</th>
-				<th>${user.date}</th>
+				<th>${list.book.autor.firstName} ${list.book.autor.lastName}</th>
+				<th>${list.book.titlu}</th>
+				<th>${list.user.firstName} ${list.user.lastName}</th>
+				<th>      </th>
 
 			</tr>
 		</c:forEach>

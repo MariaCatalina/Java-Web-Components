@@ -3,7 +3,7 @@ package model;
 
 public class MyBook {
 
-	private String autor;
+	private Author autor;
 	private String titlu;
 	private int index;
 	private int nrExemplare;
@@ -11,17 +11,17 @@ public class MyBook {
 
 	/* initializari */
 	public MyBook(){
-		this.autor = new String();
+		this.autor = new Author();
 		this.titlu = new String();
 		this.nrExemplare = 0;
 		this.nrExemplareImprumutate = 0;
 	}
 
-	public void setAutor(String nume){
-		this.autor = nume;
+	public void setAutor(Author a){
+		this.autor = a;
 	}
 
-	public String getAutor(){
+	public Author getAutor(){
 		return this.autor;
 	}
 
@@ -84,7 +84,7 @@ public class MyBook {
 	}
 
 	/* metoda inregistreaza o carte */
-	public void setBook(String autor,String titlu,int index, int nrExemplare, int nrExemplareImprumutate){
+	public void setBook(Author autor,String titlu,int index, int nrExemplare, int nrExemplareImprumutate){
 		
 		this.autor = autor;
 		this.titlu = titlu;

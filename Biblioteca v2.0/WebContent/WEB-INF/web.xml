@@ -19,7 +19,7 @@
 
 <servlet>
 	<servlet-name>PageClient</servlet-name>
-	<jsp-file>/indexClient.jsp</jsp-file>
+	<jsp-file>/pageClient.jsp</jsp-file>
 </servlet>
 
 <servlet-mapping>
@@ -181,6 +181,35 @@
 	<url-pattern>/AddBook</url-pattern>
 </servlet-mapping>
 
+<!-- servlet pentru butoanele modifica / sterge -->
+<servlet>
+	<servlet-name>Button</servlet-name>
+	<servlet-class>servlets.ActionsButtonsAuthor</servlet-class>
+</servlet>
+<servlet-mapping>
+	<servlet-name>Button</servlet-name>
+	<url-pattern>/ActionButton</url-pattern>
+</servlet-mapping>
+
+<!-- servlet pt modificare autor -->
+<servlet>
+	<servlet-name>ModifyA</servlet-name>
+	<servlet-class>servlets.ModifyAuthor</servlet-class>
+</servlet>
+<servlet-mapping>
+	<servlet-name>ModifyA</servlet-name>
+	<url-pattern>/modifyedAuthor</url-pattern>
+</servlet-mapping>
+
+<!-- pagina pentru setarile clientului -->
+<servlet>
+	<servlet-name>Setings</servlet-name>
+	<servlet-class>servlets.ClientSetings</servlet-class>
+</servlet>
+<servlet-mapping>
+	<servlet-name>Setings</servlet-name>
+	<url-pattern>/Setings</url-pattern>
+</servlet-mapping>
 
 <listener>
     <listener-class>listener.MyContextListener</listener-class>
@@ -198,10 +227,12 @@
 	<url-pattern>/*</url-pattern>
 </filter-mapping>
 
- <welcome-file-list>
- 	<welcome-file>/index</welcome-file>
- </welcome-file-list>
- 
+<welcome-file-list>
+	<welcome-file>/index</welcome-file>
+	<welcome-file>/indexClient</welcome-file>
+</welcome-file-list>
+
+
  
  <!-- SECURITY ROLE -->
  <security-role>
@@ -235,6 +266,7 @@
 <security-constraint>
 
 	<web-resource-collection>
+	
 		<web-resource-name>Bine ai venit!</web-resource-name>
 		<url-pattern>/CarteAdaugata</url-pattern>
 		<url-pattern>/AddBooks.jsp</url-pattern>
