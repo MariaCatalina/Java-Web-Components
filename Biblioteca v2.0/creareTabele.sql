@@ -30,7 +30,7 @@ CREATE TABLE borrowedBooks
 	borrowedBook_id bigserial PRIMARY KEY,
 	borrowedBook_user_id integer not null,
 	borrowedBook_book_id integer not null,
-	borrowed_date date not null, 
+	borrowedBook_date date not null, 
 	foreign key (borrowedBook_user_id) references users (user_id),
 	foreign key (borrowedBook_book_id) references books (book_id)
 );
