@@ -17,20 +17,19 @@
 <div style="text-align: center">
 
 	<%
-			String firstName = (String)request.getParameter("FirstName"); 
-			String lastName = (String)request.getParameter("LastName"); 
+		String firstName = (String)request.getParameter("FirstName"); 
+		String lastName = (String)request.getParameter("LastName"); 
 	%>
 
 		<c:choose>
 			<c:when test="${ConfirmDelete == true }">
-				<em>Autorul a fost sters cu succes!</em>
+				<em>The author was removed successfully!</em>
 			</c:when>
 		
 			<c:when test="${ConfirmDelete == false }">
-				<em>Autorul are o carte asignata</em>
+				<em>The author has a book assigned!</em>
 			</c:when>
 		</c:choose>
-			
-	
-
 </div>
+</body>
+</html>

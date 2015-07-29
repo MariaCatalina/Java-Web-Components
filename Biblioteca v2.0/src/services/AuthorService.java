@@ -29,7 +29,7 @@ public class AuthorService {
 	 * @return
 	 */
 	public ArrayList<model.Author> getAllAuthors(){
-
+		
 		try{
 			//STEP 2: Register JDBC driver
 			Class.forName("org.postgresql.Driver");
@@ -91,6 +91,7 @@ public class AuthorService {
 	 * 		   1 - autorul a fost adaugat in baza de date  
 	 */
 	public int createAuthor(String firstName, String lastName){
+		String sql;
 
 		try{
 			//STEP 2: Register JDBC driver
@@ -101,8 +102,6 @@ public class AuthorService {
 
 			//STEP 4: Execute a query
 			stmt = conn.createStatement();
-
-			String sql;
 
 			/* verificare daca autorul este deja adaugat */
 
@@ -153,7 +152,6 @@ public class AuthorService {
 	 * @return
 	 */
 	public model.Author getSpecifiedAuthor(int index){
-		
 		
 		try{
 			//STEP 2: Register JDBC driver
@@ -264,6 +262,7 @@ public class AuthorService {
 	 * @return
 	 */
 	public boolean deleteAuthor(int index){
+		String sql;
 		
 		try{
 			//STEP 2: Register JDBC driver
@@ -274,14 +273,10 @@ public class AuthorService {
 
 			//STEP 4: Execute a query
 			stmt = conn.createStatement();
-
-			String sql;
 			
 			/* verific daca autorul are carte in tabelul cu carti */
-			
 			sql = "SELECT book_id FROM books WHERE book_author_id = '" + index +"'";
 			ResultSet rs = stmt.executeQuery(sql);
-			
 			
 			if( rs.next() ){
 				/* autorul nu se poate sterge */

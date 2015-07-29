@@ -23,15 +23,15 @@
 
 		<c:choose>
 			<c:when test="${ExistaAutor == 'exista' }">
-				<em>Autorul introdus exista in baza de date</em>
+				<em>The author already exist in the data base!</em>
 			</c:when>
 			
 			<c:when test="${ExistaAutor == 'NUexista' }">
-				<em>Ai introdus autorul: <%=firstName %> <%=lastName %></em>
+				<em>You have entered the author: <%=firstName %> <%=lastName %></em>
 			</c:when>
 			
 			<c:when test="${ExistaAutor == 'dateInvalide' }">
-				<em>Date introduse gresit</em>
+				<em>Data entered wrong! Try again! </em>
 			</c:when>
 		</c:choose>
 			

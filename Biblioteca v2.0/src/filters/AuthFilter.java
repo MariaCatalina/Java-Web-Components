@@ -5,6 +5,8 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import services.ClientService;
+
 public class AuthFilter implements Filter{
 
 	
@@ -21,19 +23,27 @@ public class AuthFilter implements Filter{
 		
 		HttpServletRequest request = (HttpServletRequest) req;
     	
+		String email = request.getUserPrincipal().getName();
+		
+		services.ClientService cService = new ClientService();
+
+		/* acceseaza vechile date din memorie */
+		model.User user = cService.getUserData(email);
+		
     	if (request.isUserInRole("bibliotecar")) { 
    
             request.setAttribute("role","bibliotecar");
-    		request.setAttribute("email",request.getUserPrincipal().getName() );
+    		request.setAttribute("email",email );
     
     	}
     	else if((request.isUserInRole("client"))){
     		
     		request.setAttribute("role","client");
-    		request.setAttribute("email",request.getUserPrincipal().getName() );
+    		request.setAttribute("email",email);
     
     	}
         
+    	request.setAttribute("userName", user);
 		chain.doFilter(req, res);
 	
 	}

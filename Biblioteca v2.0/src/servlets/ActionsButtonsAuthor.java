@@ -19,8 +19,6 @@ public class ActionsButtonsAuthor extends HttpServlet{
 
 		int index = Integer.parseInt(indexS);	
 
-		System.out.println("**** " + tipe);
-
 		RequestDispatcher view;
 
 		AuthorService authorService = new AuthorService();

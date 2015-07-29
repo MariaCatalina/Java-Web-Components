@@ -6,7 +6,7 @@ public class MyBook {
 	private Author autor;
 	private String titlu;
 	private int index;
-	private int nrExemplare;
+	private Integer nrExemplare;
 	private int nrExemplareImprumutate;
 
 	/* initializari */
@@ -94,7 +94,7 @@ public class MyBook {
 	}
 	
 	/* metoda verifica daca string-ul introdus poate fi convertit in int */
-	public boolean verificaNrExemplare(String numar){
+	public boolean verifyNumber(String numar){
 		try {
 			Integer.parseInt(numar);
 			return true;

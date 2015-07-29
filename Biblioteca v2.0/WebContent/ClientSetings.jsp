@@ -18,7 +18,7 @@
 <br>
 <center>
 	
-	<em>Modify your name: </em> <br><br>
+	<em>Change your name: </em> <br><br>
 	
 	<form action="Setings" method="get">
 		
@@ -28,6 +28,9 @@
 
 		<br>
 
-		<button type="submit">Save</button>
+		<button type="submit" style=" width: 8em;  height: 2em; text-align:center;
+									border: 3px;">Save</button>
 	</form>
 </center>
+</body>
+</html>

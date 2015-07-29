@@ -32,8 +32,9 @@ body {
 }
 
 div.wrapper {
-	margin: 5px;
+
 	width: 250px;
+	position:fixed;
 }
 
 nav.vertical {
@@ -130,8 +131,6 @@ nav.vertical>ul>li>div>ul>li:hover>a {
 <% if( request.getAttribute("role").equals("bibliotecar")) { %>
 
 <div class="wrapper">
-	<div class="col-xs-4">
-
 		<nav class="vertical">
 
 			<ul>
@@ -139,28 +138,26 @@ nav.vertical>ul>li>div>ul>li:hover>a {
 					name="verticalMenu" id="home" />
 					<div>
 						<ul>
-							<li><a href="ListAuthors">List of authors</a></li>
 							<li><a href="AddAuthor.jsp">Add an author</a></li>
-							<li><a href="AddBooks.jsp">Add a book</a></li>
+							<li><a href="AddBook">Add a book</a></li>
 						</ul>
 					</div></li>
 				<li><label for="blog">List of books</label> <input type="radio"
 					name="verticalMenu" id="blog" />
 					<div>
 						<ul>
-							<li><a href="ListaCarti">All books</a></li>
+							<li><a href="ListAuthors">List of authors</a></li>
+							<li><a href="ListaCarti">List of books</a></li>
 							<li><a href="ListaCartiImprumutate">Borrowed books</a></li>
 					   </ul>
 					</div></li>
 			</ul>
 		</nav>
-	</div>
 </div>
+	
 <%} else { %>
 
 <div class="wrapper">
-	<div class="col-xs-4">
-
 		<nav class="vertical">
 
 			<ul>
@@ -168,22 +165,19 @@ nav.vertical>ul>li>div>ul>li:hover>a {
 					name="verticalMenu" id="home" />
 					<div>
 						<ul>
-							<li><a href="#">List all books</a></li>
-							<li><a href="#">List borrowed books</a></li>
+							<li><a href="ListaCartiUser">List all books</a></li>
+							<li><a href="ListaCartiImprumutateUser">List borrowed books</a></li>
 						</ul>
 					</div></li>
 					
-				<li><label for="home">Profile</label> <input type="radio"
-					name="verticalMenu" id="home" />
+				<li><label for="profile">Profile</label> <input type="radio"
+					name="verticalMenu" id="profile" />
 					<div>
 						<ul>
 							<li><a href="ClientSetings.jsp">Edit profile</a></li>
-							<li><a href="#">****</a></li>
-							<li><a href="#">****</a></li>
 						</ul>
 					</div></li>
 			</ul>
 		</nav>
-	</div>
 </div>
 <%} %>

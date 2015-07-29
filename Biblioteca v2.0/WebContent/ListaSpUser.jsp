@@ -6,49 +6,46 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 
-<%@include file="Header.jsp"%>
+<%@include file="pageJSP.jsp"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.io.*"%>
 
-<%-- jsp-ul afișează listă de cărti imprumutate de catre useru-ul curent --%>
 
-<br>
-<form action="index" method="post">
-	<input type="image" src="images/return1.jpg" width="100" height="67">
-</form>
+<%-- jsp-ul afișează listă de cărti imprumutate de catre user-ul curent --%>
 
-<form action="ListaCartiImprumutateUser" method="get">
-	<input type="hidden" name="selSortD" value="selDupaData" />
-	<button type="submit">Sortare după data</button>
-</form>
+<div
+	style="position: relative; float: right; width: 900px; margin-right: 20px;">
 
-<center>
-
-	<table style="width: 80%; border: 2px solid black" BORDER="2">
+<br/>
+	<table width="100%" border="2">
 		<tr>
-			<th>Autor</th>
-			<th>Titlu</th>
-			<th>Data împrumutării</th>
-			<th>*Acțiune*</th>
+			<th>Index</th>
+			<th>Author</th>
+			<th>Title</th>
+			<th>Borrow Date</th>
+			<th>* Action *</th>
 		</tr>
-
-
-		<c:forEach items="${listaCartiSpUser}" var="user">
+	
+		<%int count = 1; %>
+		<c:forEach items="${listaCartiSpUser}" var="bBook">
 
 			<tr>
-				<th>${user.book.autor}</th>
-				<th>${user.book.titlu}</th>
-				<th>${user.date }</th>
+				<th><%=count ++ %>
+				<th>${bBook.book.autor.firstName} ${bBook.book.autor.lastName}</th>
+				<th>${bBook.book.titlu}</th>
+				<th>${bBook.date }</th>
 				<th>
 					<form action="ReturneazaCarte" method="get">
-						<input type="hidden" name="bookIndexR" value="${user.index}" />
-						<button type="submit">Returnează</button>
+						<input type="hidden" name="bookIndexR" value="${bBook.index}" />
+						<button type="submit" style=" width: 8em;  height: 1.5em; text-align:center;
+									border: 2px;">Return</button>
 					</form>
 				</th>
 			</tr>
 
 		</c:forEach>
 	</table>
-</center>
+
+</div>
 </body>
 </html>

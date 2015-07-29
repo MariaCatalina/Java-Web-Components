@@ -13,30 +13,30 @@
 <%@ page import="java.io.*"%>
 
 	<%-- jsp-ul creeaza pagina cu tablelul unde sunt afișate datele despre carțile împrumutate --%>
-	
-<br>
 
-<center>
-	<table style="width: 80%" border="2">
+<div style="position:relative; float: right; width: 890px; margin-right: 20px;">
+		<table width="100%" border="2">
 		<tr>
-
-			<th>Autor</th>
-			<th>Titlu</th>
-			<th>Nume client</th>
-			<th>Data împrumutării</th>
+			<th>Index</th>
+			<th>Author</th>
+			<th>Title</th>
+			<th>Client name</th>
+			<th>Borrow date</th>
 		</tr>
-
+	
+		<%int count = 1; %>
 		<c:forEach items="${listaImp}" var="list">
 
 			<tr>
+				<th><%=count ++ %> </th>
 				<th>${list.book.autor.firstName} ${list.book.autor.lastName}</th>
 				<th>${list.book.titlu}</th>
 				<th>${list.user.firstName} ${list.user.lastName}</th>
-				<th>      </th>
+				<th>${list.date } </th>
 
 			</tr>
 		</c:forEach>
 	</table>
-</center>
+</div>
 </body>
 </html>

@@ -32,11 +32,11 @@ public class BorrowedBook {
 		return index;
 	}
 	/* metoada inregistreaza o carte imprumutata de un user */
-	public void setBookB(User user,MyBook book, int index){
+	public void setBookB(User user,MyBook book, int index, Date data){
 	
 		this.user = user;
 		this.book = book;
-	//	this.date = data;
+		this.date = data;
 		this.index = index;
 	}
 	

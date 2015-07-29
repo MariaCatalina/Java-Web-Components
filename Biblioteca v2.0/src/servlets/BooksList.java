@@ -8,7 +8,7 @@ import javax.servlet.http.*;
 
 import services.BooksService;
 
-public class ListaAdmin extends HttpServlet{
+public class BooksList extends HttpServlet{
 
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	static final String DB_URL = "jdbc:postgresql://localhost:5432/catalina";
@@ -26,7 +26,7 @@ public class ListaAdmin extends HttpServlet{
 		
 		request.setAttribute("listaCompleta",books);
 
-		RequestDispatcher view = request.getRequestDispatcher("/ListaAdmin.jsp");
+		RequestDispatcher view = request.getRequestDispatcher("/BooksList.jsp");
 		view.forward(request, response);
 
 

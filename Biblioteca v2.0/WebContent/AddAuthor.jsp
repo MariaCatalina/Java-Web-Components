@@ -9,9 +9,9 @@
 	<form action="AddAuthor" method="get">
 		First Name: <input type="text" name="FirstName" value="${author.firstName }"><br> 
 		Last Name: <input type="text" name="LastName" value="${author.lastName }"><br>
+		<br/>
 
-		<br>
-
-		<button type="submit">ADD</button>
+		<button type="submit" style=" width: 8em;  height: 2em; text-align:center;
+						border: 3px;">ADD</button>
 	</form>
 </center>

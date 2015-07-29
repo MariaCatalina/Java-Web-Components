@@ -15,130 +15,74 @@
 	<url-pattern>/index</url-pattern>
 </servlet-mapping>
 
-<!-- pagina principala client -->
-
-<servlet>
-	<servlet-name>PageClient</servlet-name>
-	<jsp-file>/pageClient.jsp</jsp-file>
-</servlet>
-
-<servlet-mapping>
-	<servlet-name>PageClient</servlet-name>
-	<url-pattern>/indexClient</url-pattern>
-</servlet-mapping>
-
-
+<!-- servlet pentru adaugare carte -->
 <servlet>
 	<servlet-name>AddB</servlet-name>
 	<servlet-class>servlets.AddBook</servlet-class>
 </servlet>
-
 <servlet-mapping>
 	<servlet-name>AddB</servlet-name>
 	<url-pattern>/CarteAdaugata</url-pattern>
 </servlet-mapping>
 
+<!-- url pentru afisarea cartilor pentru admin -->
  <servlet>
 	<servlet-name>ListaB</servlet-name>
-	<servlet-class>servlets.ListaAdmin</servlet-class>
+	<servlet-class>servlets.BooksList</servlet-class>
 </servlet>
-
 <servlet-mapping>
 	<servlet-name>ListaB</servlet-name>
 	<url-pattern>/ListaCarti</url-pattern>
 </servlet-mapping>
 
- <servlet>
-	<servlet-name>ListaD</servlet-name>
-	<servlet-class>servlets.DeleteBook</servlet-class>
-</servlet>
-
-<servlet-mapping>
-	<servlet-name>ListaD</servlet-name>
-	<url-pattern>/CarteStearsa</url-pattern>
-</servlet-mapping>
-
+<!-- url pentru lista de carti pentru user -->
  <servlet>
 	<servlet-name>ListaUser</servlet-name>
 	<servlet-class>servlets.ListaCartiUser</servlet-class>
 </servlet>
-
 <servlet-mapping>
 	<servlet-name>ListaUser</servlet-name>
 	<url-pattern>/ListaCartiUser</url-pattern>
 </servlet-mapping>
 
+<!-- butonul imprumuta -->
  <servlet>
 	<servlet-name>CarteImp</servlet-name>
 	<servlet-class>servlets.Imprumuta</servlet-class>
 </servlet>
-
 <servlet-mapping>
 	<servlet-name>CarteImp</servlet-name>
 	<url-pattern>/CarteImprumutata</url-pattern>
 </servlet-mapping>
 
-
-
+<!-- lista cartilor imprumutate pt admin -->
  <servlet>
 	<servlet-name>LCarteImp</servlet-name>
 	<servlet-class>servlets.ListaCartiImprumutate</servlet-class>
 </servlet>
-
 <servlet-mapping>
 	<servlet-name>LCarteImp</servlet-name>
 	<url-pattern>/ListaCartiImprumutate</url-pattern>
 </servlet-mapping>
 
- <servlet>
-	<servlet-name>LCartiAutor</servlet-name>
-	<servlet-class>servlets.SortareServlet</servlet-class>
-</servlet>
-
-<servlet-mapping>
-	<servlet-name>LCartiAutor</servlet-name>
-	<url-pattern>/ListaSortareAutor</url-pattern>
-</servlet-mapping>
-
- <servlet>
-	<servlet-name>LCartiTitlu</servlet-name>
-	<servlet-class>servlets.SortareTitlu</servlet-class>
-</servlet>
-
-<servlet-mapping>
-	<servlet-name>LCartiAutor</servlet-name>
-	<url-pattern>/ListaSortareTitlu</url-pattern>
-</servlet-mapping>
-
+<!-- lista carti imprumutate de user -->
  <servlet>
 	<servlet-name>LSpUser</servlet-name>
 	<servlet-class>servlets.ListaSpUser</servlet-class>
 </servlet>
-
 <servlet-mapping>
 	<servlet-name>LSpUser</servlet-name>
 	<url-pattern>/ListaCartiImprumutateUser</url-pattern>
 </servlet-mapping>
 
-
+<!-- butonul returneaza  -->
  <servlet>
 	<servlet-name>Return</servlet-name>
 	<servlet-class>servlets.Returneaza</servlet-class>
 </servlet>
-
 <servlet-mapping>
 	<servlet-name>Return</servlet-name>
 	<url-pattern>/ReturneazaCarte</url-pattern>
-</servlet-mapping>
-
-<!-- butoanele de la adaugare -->
-<servlet>
-	<servlet-name>AddButton</servlet-name>
-	<jsp-file>/AddButtons.jsp</jsp-file>
-</servlet>
-<servlet-mapping>
-	<servlet-name>AddButton</servlet-name>
-	<url-pattern>/addedField</url-pattern>
 </servlet-mapping>
 
 <!-- lista de autori -->
@@ -169,7 +113,6 @@
 	<servlet-name>AddedAuthor</servlet-name>
 	<url-pattern>/AddedAuthor</url-pattern>
 </servlet-mapping>
-
 
 <!-- url before add book -->
 <servlet>
@@ -211,10 +154,25 @@
 	<url-pattern>/Setings</url-pattern>
 </servlet-mapping>
 
-<listener>
-    <listener-class>listener.MyContextListener</listener-class>
-</listener>
+<!-- butoanele de la lista de carti -->
+<servlet>
+	<servlet-name>ABB</servlet-name>
+	<servlet-class>servlets.ActionsButtonsBooks</servlet-class>
+</servlet>
+<servlet-mapping>
+	<servlet-name>ABB</servlet-name>
+	<url-pattern>/ActionButtonBook</url-pattern>
+</servlet-mapping>
 
+<!-- clasa unde se modifica o carte -->
+<servlet>
+	<servlet-name>ModBook</servlet-name>
+	<servlet-class>servlets.ModifyBook</servlet-class>
+</servlet>
+<servlet-mapping>
+	<servlet-name>ModBook</servlet-name>
+	<url-pattern>/modifiedBook</url-pattern>
+</servlet-mapping>
 
 
 <filter>
@@ -232,8 +190,6 @@
 	<welcome-file>/indexClient</welcome-file>
 </welcome-file-list>
 
-
- 
  <!-- SECURITY ROLE -->
  <security-role>
  	<role-name>bibliotecar</role-name>
@@ -272,6 +228,9 @@
 		<url-pattern>/AddBooks.jsp</url-pattern>
 		<url-pattern>/ListaCarti</url-pattern>
 		<url-pattern>/ListaCartiImprumutate</url-pattern>
+		<url-pattern>/AddBook</url-pattern>
+		<url-pattern>/ListAuthors</url-pattern>
+		<url-pattern>/AddAuthor.jsp</url-pattern>
 	
 		<http-method>GET</http-method>
 		<http-method>POST</http-method>

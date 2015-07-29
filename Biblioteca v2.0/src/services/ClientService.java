@@ -19,9 +19,14 @@ public class ClientService {
 
 	Connection conn = null;
 	Statement stmt = null;
-	
+
+	/**
+	 * returneaza un obiect de tip User care corespunde cerintei
+	 * @param email
+	 * @return
+	 */
 	public model.User getUserData(String email){
-		
+		ResultSet rs;
 		try{
 			//STEP 2: Register JDBC driver
 			Class.forName("org.postgresql.Driver");
@@ -34,25 +39,23 @@ public class ClientService {
 
 			/* preluare informatii din baza de date */
 			String sql = "SELECT user_id,user_firstName, user_lastName FROM users WHERE user_email = '" + email + "'";
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			model.User user = new User();
 
-			while(rs.next()){
+			while ( rs.next() ){
 
 				int id = rs.getInt("user_id");
 				String firstName = rs.getString("user_firstName");
 				String lastName = rs.getString("user_lastName");
-				
+
 				user.setIndex(id);
 				user.setEmail(email);
 				user.setFirstName(firstName);
 				user.setLastName(lastName);
-				
-			}	
-			
+			}
 			return user;
-		
+
 		}catch(SQLException se){
 			//Handle errors for JDBC
 			se.printStackTrace();
@@ -76,9 +79,16 @@ public class ClientService {
 
 		return null;
 	}
-	
-public void modifyUserData(String email, String firstName, String lastName){
-		
+
+	/**
+	 * metoda modifica datele din tabelul users
+	 * @param email
+	 * @param firstName
+	 * @param lastName
+	 */
+	public void modifyUserData(String email, String firstName, String lastName){
+		String sql;
+
 		try{
 			//STEP 2: Register JDBC driver
 			Class.forName("org.postgresql.Driver");
@@ -89,15 +99,12 @@ public void modifyUserData(String email, String firstName, String lastName){
 			//STEP 4: Execute a query
 			stmt = conn.createStatement();
 
-			String sql;
-	
 			/* modificare informatii din baza de date */
 			sql = "UPDATE users SET user_firstName ='" + firstName + "', user_lastName = '" + lastName + "'";
 			sql += "WHERE user_email = '" + email + "'";
-			
+
 			stmt.executeUpdate(sql);
 
-	
 		}catch(SQLException se){
 			//Handle errors for JDBC
 			se.printStackTrace();
