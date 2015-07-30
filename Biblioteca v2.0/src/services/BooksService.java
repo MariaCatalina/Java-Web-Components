@@ -11,18 +11,16 @@ import model.Author;
 import model.MyBook;
 
 public class BooksService {
-
-	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	static final String DB_URL = "jdbc:postgresql://localhost:5432/catalina";
+	private static final String DB_URL = "jdbc:postgresql://localhost:5432/catalina";
 
 	//  Database credentials
-	static final String USER = "postgres";
-	static final String PASS = "sql";
+	private static final String USER = "postgres";
+	private static final String PASS = "sql";
 
-	Connection conn;
-	Statement stmt;
+	private Connection conn;
+	private Statement stmt;
 
-	ArrayList<model.MyBook> books ;
+	private ArrayList<model.MyBook> books ;
 
 	public BooksService(){
 		conn = null;
@@ -47,7 +45,6 @@ public class BooksService {
 
 			//STEP 4: Execute a query
 			stmt = conn.createStatement();
-
 
 			/* accesare baza de date */
 			sql = "SELECT book_id , a.author_id, a.author_firstName, a.author_lastName";
@@ -136,7 +133,6 @@ public class BooksService {
 
 			/* daca intoarce adevarat => cartea a mai fost introdusa */
 			if(rs.next()){
-
 				int nrNou = rs.getInt("book_noCopies") + noCopies;
 
 				sql = "UPDATE books SET book_noCopies = '" + nrNou + "' WHERE book_author_id = '" + authorId + "' AND ";
@@ -200,7 +196,6 @@ public class BooksService {
 
 			MyBook b = new MyBook();
 			while(rs.next()){
-
 				int id = rs.getInt("book_id");
 				String title = rs.getString("book_title");
 				int authorID = rs.getInt("book_author_id");
@@ -312,14 +307,11 @@ public class BooksService {
 
 			/* daca nr extras =1 carte se sterge de tot */
 			if( nrExemplare > nrExemplareImp && nrExemplare > 1 ){
-
 				sql = "UPDATE books SET book_noCopies = '" + (nrExemplare - 1) + "'" + "WHERE book_id = '" + index + "'";
 				stmt.executeUpdate(sql);
-
 			}
 			/* daca mai e un singur exemplar cartea se sterge */
 			else if (nrExemplare == 1 && nrExemplareImp == 0){
-
 				sql = "DELETE FROM books b WHERE b.book_id = '" + index + "'";
 				stmt.executeUpdate(sql);
 			}

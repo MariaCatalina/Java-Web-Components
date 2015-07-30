@@ -6,15 +6,12 @@ public class MyBook {
 	private Author autor;
 	private String titlu;
 	private int index;
-	private Integer nrExemplare;
+	private int nrExemplare;
 	private int nrExemplareImprumutate;
 
 	/* initializari */
 	public MyBook(){
-		this.autor = new Author();
-		this.titlu = new String();
-		this.nrExemplare = 0;
-		this.nrExemplareImprumutate = 0;
+
 	}
 
 	public void setAutor(Author a){
@@ -50,15 +47,6 @@ public class MyBook {
 		return this.nrExemplare;
 	}
 
-	/* metoda verifica dacă o carte poate fi împrumutată si actualizează numarul lor */
-	public void setExImprumutate(){
-
-		if(nrExemplare > nrExemplareImprumutate){
-			this.nrExemplareImprumutate ++;
-		}
-
-	}
-
 	public int getNrExemplareImprumutate(){
 		return this.nrExemplareImprumutate;
 	}
@@ -67,22 +55,7 @@ public class MyBook {
 	public int getIndex(){
 		return index;
 	}
-
-	/* metoda actualizeaza numărul total exemplare care se șterg*/
-	public void deleteB(){
-		nrExemplare --;
-	}
-
-	/* metoda actualizează numărul de exemplare împrumutate */
-	public void removeB(){
-		nrExemplareImprumutate --;
-	}
-
-	/* metoda actualizeaza numarul de exemplare al cartilor duplicate */
-	public void setDuplicat(int exemplare){
-		this.nrExemplare += exemplare;
-	}
-
+	
 	/* metoda inregistreaza o carte */
 	public void setBook(Author autor,String titlu,int index, int nrExemplare, int nrExemplareImprumutate){
 		

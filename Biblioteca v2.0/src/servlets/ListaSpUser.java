@@ -15,15 +15,16 @@ public class ListaSpUser extends HttpServlet{
 	public void doGet(HttpServletRequest request , HttpServletResponse response) throws IOException,ServletException{
 
 		String email = (String) request.getAttribute("email");
-		
+
 		BorrowedBookService b = new BorrowedBookService();
+		
 		ArrayList<BorrowedBook> lista = b.getSpecifiedBorrowedBooks(email);
-			/* set atribute -> prelucret in jsp */
-			request.setAttribute("listaCartiSpUser",lista);
+		
+		/* set atribute -> prelucret in jsp */
+		request.setAttribute("listaCartiSpUser",lista);
 
-
-			RequestDispatcher view = request.getRequestDispatcher("/ListaSpUser.jsp");
-			view.forward(request, response);
+		RequestDispatcher view = request.getRequestDispatcher("/ListaSpUser.jsp");
+		view.forward(request, response);
 
 
 

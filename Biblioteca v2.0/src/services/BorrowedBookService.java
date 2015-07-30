@@ -7,21 +7,20 @@ import java.util.Date;
 
 import model.Author;
 import model.BorrowedBook;
-
+import model.MyBook;
 import model.User;
 
 public class BorrowedBookService {
-	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	static final String DB_URL = "jdbc:postgresql://localhost:5432/catalina";
+	private static final String DB_URL = "jdbc:postgresql://localhost:5432/catalina";
 
 	//  Database credentials
-	static final String USER = "postgres";
-	static final String PASS = "sql";
+	private static final String USER = "postgres";
+	private static final String PASS = "sql";
 
-	Connection conn;
-	Statement stmt;
+	private Connection conn;
+	private Statement stmt;
 
-	ArrayList<BorrowedBook> borrowedB ;
+	private ArrayList<BorrowedBook> borrowedB ;
 
 	public BorrowedBookService(){
 		conn = null;
@@ -95,7 +94,7 @@ public class BorrowedBookService {
 				b.setBook(a, book_name,ind, nrExemplare, nrExemplareImp);
 
 				bookB = new BorrowedBook();
-				bookB.setBookB(u, b, borrowedId,date);
+				bookB.setBorrowedBook(u, b, borrowedId,date);
 
 				borrowedB.add(bookB);
 			}
@@ -210,8 +209,8 @@ public class BorrowedBookService {
 	public ArrayList<BorrowedBook> getSpecifiedBorrowedBooks(String emailUser){
 		String sql;
 
-		model.MyBook b;
-		model.BorrowedBook bookB;
+		MyBook b;
+		BorrowedBook bookB;
 
 		try{
 			//STEP 2: Register JDBC driver
@@ -269,7 +268,7 @@ public class BorrowedBookService {
 				b.setBook(a, book_name,ind, nrExemplare, nrExemplareImp);
 
 				bookB = new BorrowedBook();
-				bookB.setBookB(u, b, borrowedId,date);
+				bookB.setBorrowedBook(u, b, borrowedId,date);
 
 				borrowedB.add(bookB);
 			}
@@ -307,7 +306,6 @@ public class BorrowedBookService {
 	 * @param indexBBook
 	 */
 	public void returnBorrowedBook(int indexBBook){
-		
 		ResultSet rs;
 		String sql;
 

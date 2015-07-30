@@ -7,10 +7,8 @@ public class User {
 	private String lastName;
 	
 	public User(){
-		email = new String();
-		firstName = new String();
-		lastName = new String();
 	}
+	
 	public User (int index, String email, String firstName, String lastName){
 		this.index = index;
 		this.email = email;

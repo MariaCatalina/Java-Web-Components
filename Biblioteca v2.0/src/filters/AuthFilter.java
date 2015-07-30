@@ -5,6 +5,7 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import model.User;
 import services.ClientService;
 
 public class AuthFilter implements Filter{
@@ -25,10 +26,10 @@ public class AuthFilter implements Filter{
     	
 		String email = request.getUserPrincipal().getName();
 		
-		services.ClientService cService = new ClientService();
+		ClientService cService = new ClientService();
 
 		/* acceseaza vechile date din memorie */
-		model.User user = cService.getUserData(email);
+		User user = cService.getUserData(email);
 		
     	if (request.isUserInRole("bibliotecar")) { 
    

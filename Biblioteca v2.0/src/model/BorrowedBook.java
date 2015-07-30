@@ -10,7 +10,6 @@ public class BorrowedBook {
 	private User user;
 	
 	public BorrowedBook(){
-		this.index = 0;
 		this.date = new Date();
 		this.book = new MyBook();
 		this.user = new User();
@@ -32,7 +31,7 @@ public class BorrowedBook {
 		return index;
 	}
 	/* metoada inregistreaza o carte imprumutata de un user */
-	public void setBookB(User user,MyBook book, int index, Date data){
+	public void setBorrowedBook(User user,MyBook book, int index, Date data){
 	
 		this.user = user;
 		this.book = book;

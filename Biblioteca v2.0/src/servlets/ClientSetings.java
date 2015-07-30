@@ -2,12 +2,10 @@ package servlets;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.*;
+import javax.servlet.http.*;
 
+import model.User;
 import services.ClientService;
 
 public class ClientSetings extends HttpServlet {
@@ -17,14 +15,11 @@ public class ClientSetings extends HttpServlet {
 		String email = (String) request.getAttribute("email");
 		String firstName = (String) request.getParameter("FirstNameC");
 		String lastName = (String ) request.getParameter("LastNameC");
-		System.out.println(email);
 
 		ClientService cService = new ClientService();
 
 		/* acceseaza vechile date din memorie */
-		model.User user = cService.getUserData(email);
-
-		System.out.println(user.getFirstName()  + " " + user.getLastName());
+		User user = cService.getUserData(email);
 		
 		/* daca clientul vrea sa modifice doar un parte din nume */
 		if(firstName.isEmpty()){

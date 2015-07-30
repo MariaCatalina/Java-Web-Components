@@ -6,6 +6,7 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import model.MyBook;
 import services.BooksService;
 
 public class ListaCartiUser extends HttpServlet{
@@ -14,7 +15,7 @@ public class ListaCartiUser extends HttpServlet{
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException,ServletException {
 
-		ArrayList<model.MyBook> books ;
+		ArrayList<MyBook> books ;
 		
 		String sort = (String)request.getParameter("selSort");
 		String tipSortAutor = (String)request.getParameter("tipA");

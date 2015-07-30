@@ -2,12 +2,10 @@ package servlets;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.*;
+import javax.servlet.http.*;
 
+import model.Author;
 import services.AuthorService;
 
 public class ActionsButtonsAuthor extends HttpServlet{
@@ -16,15 +14,13 @@ public class ActionsButtonsAuthor extends HttpServlet{
 
 		String tipe = (String)request.getParameter("actiune");
 		String indexS = (String)request.getParameter("authorIndex");
-
 		int index = Integer.parseInt(indexS);	
 
 		RequestDispatcher view;
 
 		AuthorService authorService = new AuthorService();
 
-		model.Author author = authorService.getSpecifiedAuthor(index);
-		System.out.println(author.getFirstName() + " "+ author.getLastName());
+		Author author = authorService.getSpecifiedAuthor(index);
 
 		if(tipe.equals("modifica")){
 			
@@ -32,7 +28,6 @@ public class ActionsButtonsAuthor extends HttpServlet{
 			view = request.getRequestDispatcher("/modifyAuthor.jsp");
 		}
 		else if(tipe.equals("sterge")){
-			System.out.println("!!!!!!!!AICI    ");
 		
 			boolean confirm = authorService.deleteAuthor(index);
 			request.setAttribute("ConfirmDelete",confirm);

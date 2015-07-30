@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.MyBook;
 import services.AuthorService;
 import services.BooksService;
 
@@ -26,10 +27,8 @@ public class ActionsButtonsBooks extends HttpServlet{
 
 		services.BooksService bookService = new BooksService();
 
-		model.MyBook book = bookService.getSpecifiedBook(index); 
+		MyBook book = bookService.getSpecifiedBook(index); 
 		
-		//System.out.println(author.getFirstName() + " "+ author.getLastName());
-
 		if(tipe.equals("modifica")){
 			
 			request.setAttribute("modifyBook", book);
@@ -40,7 +39,6 @@ public class ActionsButtonsBooks extends HttpServlet{
 			
 			request.setAttribute("listAuthors",authors);
 
-			
 			view = request.getRequestDispatcher("/modifyBook.jsp");
 		}
 		else if(tipe.equals("sterge")){

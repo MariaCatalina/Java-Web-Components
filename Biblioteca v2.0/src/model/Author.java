@@ -1,24 +1,16 @@
 package model;
 
 public class Author {
-	
 	private String firstName;
 	private String lastName;
 	private int index;
 	
 	public Author(){
-		firstName = new String();
-		lastName = new String();
-		index = 0;
 	}
 	
 	public Author(String firstName, String lastName, int index){
-		this.firstName = new String();
 		this.firstName = firstName;
-		
-		this.lastName = new String();
 		this.lastName = lastName;
-		
 		this.index = index;
 	}
 	

@@ -11,8 +11,6 @@ import services.BorrowedBookService;
 
 public class ListaCartiImprumutate extends HttpServlet {
 
-	
-
 	/* metoda seteaza un atribut cu lista totala de carti */
 	public void doGet(HttpServletRequest request, HttpServletResponse response )throws IOException, ServletException{
 		
@@ -25,6 +23,5 @@ public class ListaCartiImprumutate extends HttpServlet {
 		RequestDispatcher view = request.getRequestDispatcher("/BorrowedBooksList.jsp");
 		view.forward(request, response);
 
-		
 	}
 }

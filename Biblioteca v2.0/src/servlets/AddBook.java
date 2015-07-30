@@ -12,8 +12,7 @@ public class AddBook extends HttpServlet {
 
 	/* metoda verifica datele primite si adauga in memorie cartea */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException,ServletException{
-
-
+		
 		/* id-ul autorulul selectat */
 		String autorId = (String)request.getParameter("chooseAnAuthor"); 
 		/* titlul cartii*/

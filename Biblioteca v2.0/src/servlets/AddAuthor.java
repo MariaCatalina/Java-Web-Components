@@ -2,11 +2,8 @@ package servlets;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.*;
+import javax.servlet.http.*;
 
 import model.Author;
 import services.AuthorService;
@@ -29,17 +26,12 @@ public class AddAuthor extends HttpServlet{
 			int result = authorService.createAuthor(firstName, lastName);
 			
 			if( result == 1 ){
-				
 				request.setAttribute("ExistaAutor", "NUexista");
 				request.setAttribute("author",new Author());
-			
 			}
 			else if( result == 2 ){
-				
 				request.setAttribute("ExistaAutor", "exista");
-			
 			}
-		
 		}
 		/* datele introduse nu sunt valide */
 		else {

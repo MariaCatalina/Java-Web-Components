@@ -9,23 +9,21 @@ import java.sql.Statement;
 import model.User;
 
 public class ClientService {
-
-	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	static final String DB_URL = "jdbc:postgresql://localhost:5432/catalina";
+	private static final String DB_URL = "jdbc:postgresql://localhost:5432/catalina";
 
 	//  Database credentials
-	static final String USER = "postgres";
-	static final String PASS = "sql";
+	private static final String USER = "postgres";
+	private static final String PASS = "sql";
 
-	Connection conn = null;
-	Statement stmt = null;
+	private Connection conn = null;
+	private Statement stmt = null;
 
 	/**
 	 * returneaza un obiect de tip User care corespunde cerintei
 	 * @param email
 	 * @return
 	 */
-	public model.User getUserData(String email){
+	public User getUserData(String email){
 		ResultSet rs;
 		try{
 			//STEP 2: Register JDBC driver
@@ -41,10 +39,9 @@ public class ClientService {
 			String sql = "SELECT user_id,user_firstName, user_lastName FROM users WHERE user_email = '" + email + "'";
 			rs = stmt.executeQuery(sql);
 
-			model.User user = new User();
+			User user = new User();
 
 			while ( rs.next() ){
-
 				int id = rs.getInt("user_id");
 				String firstName = rs.getString("user_firstName");
 				String lastName = rs.getString("user_lastName");
@@ -54,6 +51,7 @@ public class ClientService {
 				user.setFirstName(firstName);
 				user.setLastName(lastName);
 			}
+			
 			return user;
 
 		}catch(SQLException se){

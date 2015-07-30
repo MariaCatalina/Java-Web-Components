@@ -15,13 +15,13 @@ public class ModifyAuthor extends HttpServlet {
 	/* servletul modifica numele unui autor cand este apasat butonu "modifica" */
 	public void doGet( HttpServletRequest request, HttpServletResponse response) throws IOException,ServletException{
 		
-		AuthorService authorService = new AuthorService();
-		
 		/* preia noile date modificate */
 		String firstName = (String) request.getParameter("FirstNameM");
 		String lastName = (String ) request.getParameter("LastNameM");
 		String indexS = (String)request.getParameter("authorIndexM");
 		
+		AuthorService authorService = new AuthorService();
+
 		/* preia vechile valori ale numelui */
 		int index = Integer.parseInt(indexS);
 		
@@ -30,6 +30,5 @@ public class ModifyAuthor extends HttpServlet {
 		
 		RequestDispatcher view = request.getRequestDispatcher("ListAuthors");
 		view.forward(request, response);
-
 	}
 }

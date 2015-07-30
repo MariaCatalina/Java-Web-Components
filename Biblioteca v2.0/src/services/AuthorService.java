@@ -7,18 +7,16 @@ import model.Author;
 
 public class AuthorService {
 
-	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	static final String DB_URL = "jdbc:postgresql://localhost:5432/catalina";
-
+	private static final String DB_URL = "jdbc:postgresql://localhost:5432/catalina";
+	
 	//  Database credentials
-	static final String USER = "postgres";
-	static final String PASS = "sql";
+	private static final String USER = "postgres";
+	private static final String PASS = "sql";
 
-	Connection conn = null;
-	Statement stmt = null;
+	private Connection conn = null;
+	private Statement stmt = null;
 
 	private ArrayList<model.Author> authorsList;
-
 
 	public AuthorService(){
 		authorsList = new ArrayList<>();
@@ -28,7 +26,7 @@ public class AuthorService {
 	 * functia returneaza lista de autori din baza de date
 	 * @return
 	 */
-	public ArrayList<model.Author> getAllAuthors(){
+	public ArrayList<Author> getAllAuthors(){
 		
 		try{
 			//STEP 2: Register JDBC driver
@@ -44,7 +42,7 @@ public class AuthorService {
 			String sql = "SELECT author_id,author_firstName, author_lastName FROM authors";
 			ResultSet rs = stmt.executeQuery(sql);
 
-			model.Author a;
+			Author a;
 
 			while(rs.next()){
 
@@ -151,7 +149,7 @@ public class AuthorService {
 	 * @param index
 	 * @return
 	 */
-	public model.Author getSpecifiedAuthor(int index){
+	public Author getSpecifiedAuthor(int index){
 		
 		try{
 			//STEP 2: Register JDBC driver
@@ -167,7 +165,7 @@ public class AuthorService {
 			String sql = "SELECT author_id,author_firstName, author_lastName FROM authors WHERE author_id = '" + index +"'";
 			ResultSet rs = stmt.executeQuery(sql);
 		
-			model.Author a = new Author();
+			Author author = new Author();
 			while(rs.next()){
 
 				int id = rs.getInt("author_id");
@@ -175,12 +173,12 @@ public class AuthorService {
 				String lastName = rs.getString("author_lastName");
 
 				/* adaugare in lista */
-				a.setFirstName(firstName);
-				a.setLastName(lastName);
-				a.setIndex(id);
+				author.setFirstName(firstName);
+				author.setLastName(lastName);
+				author.setIndex(id);
 			}
 			
-			return a;
+			return author;
 				
 		}catch(SQLException se){
 			//Handle errors for JDBC
