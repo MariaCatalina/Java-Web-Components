@@ -1,10 +1,6 @@
 package services;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 import model.Author;
@@ -18,7 +14,7 @@ public class BooksService {
 	private static final String PASS = "sql";
 
 	private Connection conn;
-	private Statement stmt;
+	private PreparedStatement stmt;
 
 	private ArrayList<model.MyBook> books ;
 
@@ -31,8 +27,10 @@ public class BooksService {
 	/**
 	 * metoda returneaza toate cartile din baza de date
 	 * @return
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public ArrayList<MyBook> getAllBooks(){
+	public ArrayList<MyBook> getAllBooks() throws SQLException, ClassNotFoundException{
 		String sql;
 		ResultSet rs;
 
@@ -43,14 +41,13 @@ public class BooksService {
 			//STEP 3: Open a connection
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-			//STEP 4: Execute a query
-			stmt = conn.createStatement();
-
 			/* accesare baza de date */
 			sql = "SELECT book_id , a.author_id, a.author_firstName, a.author_lastName";
 			sql +=", book_title, book_noCopies, book_noBorrowedCopies FROM books ";
 			sql += "LEFT JOIN authors a ON book_author_id = a.author_id";
-			rs = stmt.executeQuery(sql);
+			stmt = conn.prepareStatement(sql);
+
+			rs = stmt.executeQuery();
 
 			MyBook b;
 			Author a;
@@ -81,12 +78,6 @@ public class BooksService {
 
 			return books;
 
-		}catch(SQLException se){
-			//Handle errors for JDBC
-			se.printStackTrace();
-		}catch(Exception e){
-			//Handle errors for Class.forName
-			e.printStackTrace();
 		}finally{
 			//finally block used to close resources
 			try{
@@ -102,8 +93,6 @@ public class BooksService {
 			}//end finally try
 		}//end try
 
-		return books;
-
 	}
 
 	/**
@@ -111,8 +100,10 @@ public class BooksService {
 	 * @param authorId
 	 * @param title
 	 * @param noCopies
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public void setBook(int authorId, String title, int noCopies){
+	public void setBook(int authorId, String title, int noCopies) throws SQLException, ClassNotFoundException{
 		String sql;
 		ResultSet rs;
 
@@ -123,37 +114,39 @@ public class BooksService {
 			//STEP 3: Open a connection
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-			//STEP 4: Execute a query
-			stmt = conn.createStatement();
-
 			/* se cauta daca cartea a mai fost adaugata anterior */
-			sql = "SELECT b.book_noCopies FROM books b WHERE b.book_author_id = '" + authorId + "' AND ";
-			sql += "b.book_title = '" + title + "'";
-			rs = stmt.executeQuery(sql);
+			sql = "SELECT b.book_noCopies FROM books b WHERE b.book_author_id = ? AND ";
+			sql += "b.book_title = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, authorId);
+			stmt.setString(2, title);
+
+			rs = stmt.executeQuery();
 
 			/* daca intoarce adevarat => cartea a mai fost introdusa */
 			if(rs.next()){
 				int nrNou = rs.getInt("book_noCopies") + noCopies;
+				sql = "UPDATE books SET book_noCopies = ? WHERE book_author_id = ? AND book_title = ?";
 
-				sql = "UPDATE books SET book_noCopies = '" + nrNou + "' WHERE book_author_id = '" + authorId + "' AND ";
-				sql += "book_title = '" + title + "'";
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, nrNou);
+				stmt.setInt(2, authorId);
+				stmt.setString(3, title);
 
-				stmt.executeUpdate(sql);
+				stmt.executeUpdate();
 			}
 			else {
 				/* se adauga datele in sql */					
-				sql = "INSERT INTO books (book_author_id,book_title, book_noCopies )" ;
-				sql += " VALUES ( '" + authorId +"' , '" + title + "' , '" + noCopies + "')"  ;
+				sql = "INSERT INTO books (book_author_id,book_title, book_noCopies ) VALUES ( ?, ? ,? )";
 
-				stmt.executeUpdate(sql);
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, authorId);
+				stmt.setString(2, title);
+				stmt.setInt(3, noCopies);
+
+				stmt.executeUpdate();
 			}	
 
-		}catch(SQLException se){
-			//Handle errors for JDBC
-			se.printStackTrace();
-		}catch(Exception e){
-			//Handle errors for Class.forName
-			e.printStackTrace();
 		}finally{
 			//finally block used to close resources
 			try{
@@ -175,10 +168,13 @@ public class BooksService {
 	 * metoda extrage din baza de date cartea specificata prin index
 	 * @param indexBook
 	 * @return
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public MyBook getSpecifiedBook(int indexBook){
+	public MyBook getSpecifiedBook(int idBook) throws SQLException, ClassNotFoundException{
 		String sql;
 		ResultSet rs;
+		MyBook b = new MyBook();
 
 		try{
 			//STEP 2: Register JDBC driver
@@ -187,32 +183,29 @@ public class BooksService {
 			//STEP 3: Open a connection
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-			//STEP 4: Execute a query
-			stmt = conn.createStatement();
-
 			/* preluare informatii din baza de date */
-			sql = "SELECT book_id,book_title, book_author_id FROM books WHERE book_id = '" + indexBook +"'";
-			rs = stmt.executeQuery(sql);
-
-			MyBook b = new MyBook();
+			sql = "SELECT book_title, book_author_id FROM books WHERE book_id = ?";
+			
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, idBook);
+			
+			rs = stmt.executeQuery();
+			Author a = new Author();
+			
 			while(rs.next()){
-				int id = rs.getInt("book_id");
+
 				String title = rs.getString("book_title");
 				int authorID = rs.getInt("book_author_id");
 
-				b.setTitlu(title);
-				b.setIndex(id);
-				b.getAutor().setIndex(authorID);
+				b.setTitle(title);
+				b.setId(idBook);
+				a.setId(authorID);
+				b.setAutor(a);
+				
 			}
 
 			return b;
 
-		}catch(SQLException se){
-			//Handle errors for JDBC
-			se.printStackTrace();
-		}catch(Exception e){
-			//Handle errors for Class.forName
-			e.printStackTrace();
 		}finally{
 			//finally block used to close resources
 			try{
@@ -228,7 +221,6 @@ public class BooksService {
 			}//end finally try
 		}//end try
 
-		return null;
 	}
 
 	/**
@@ -236,8 +228,10 @@ public class BooksService {
 	 * @param indexBook
 	 * @param indexAuthor
 	 * @param title
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public void modifyBook(int indexBook, int indexAuthor, String title){
+	public void modifyBook(int indexBook, int indexAuthor, String title) throws SQLException, ClassNotFoundException{
 		String sql;
 
 		try{
@@ -247,20 +241,16 @@ public class BooksService {
 			//STEP 3: Open a connection
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-			//STEP 4: Execute a query
-			stmt = conn.createStatement();
-
 			/* actualizeaza baza de date */
-			sql = "UPDATE books SET book_title ='" + title + "', book_author_id = '" + indexAuthor + "'";
-			sql += "WHERE book_id = '" + indexBook + "'";
-			stmt.executeUpdate(sql);
+			sql = "UPDATE books SET book_title = ?, book_author_id = ? WHERE book_id = ?";
 
-		}catch(SQLException se){
-			//Handle errors for JDBC
-			se.printStackTrace();
-		}catch(Exception e){
-			//Handle errors for Class.forName
-			e.printStackTrace();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, title);
+			stmt.setInt(2, indexAuthor);
+			stmt.setInt(3, indexBook);
+			
+			stmt.executeUpdate();
+
 		}finally{
 			//finally block used to close resources
 			try{
@@ -281,11 +271,13 @@ public class BooksService {
 	 * metoda vefirica daca o carte poate fi stersa si in funtie
 	 * de rezultat se sterge un exemplar sau toata cartea
 	 * @param index-ul carti selectate
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public void deleteBook(int index){
+	public void deleteBook(int index) throws SQLException, ClassNotFoundException{
 		String sql;
 		ResultSet rs;
-		
+
 		try{
 			//STEP 2: Register JDBC driver
 			Class.forName("org.postgresql.Driver");
@@ -293,35 +285,36 @@ public class BooksService {
 			//STEP 3: Open a connection
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-			//STEP 4: Execute a query
-			stmt = conn.createStatement();
-
 			/* cautare in baza de date index-ul carti selectate pentru a lua numatrul de exemplare al cartii */
-			sql = "SELECT b.book_noCopies, b.book_noborrowedcopies FROM books b WHERE b.book_id = '" + index + "'";
-
-			rs = stmt.executeQuery(sql);
+			sql = "SELECT b.book_noCopies, b.book_noborrowedcopies FROM books b WHERE b.book_id = ?";
 			
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, index);
+			rs = stmt.executeQuery();
+
 			rs.next();
 			int nrExemplare  = rs.getInt("book_noCopies") ;
 			int nrExemplareImp = rs.getInt("book_noborrowedcopies");
 
 			/* daca nr extras =1 carte se sterge de tot */
 			if( nrExemplare > nrExemplareImp && nrExemplare > 1 ){
-				sql = "UPDATE books SET book_noCopies = '" + (nrExemplare - 1) + "'" + "WHERE book_id = '" + index + "'";
-				stmt.executeUpdate(sql);
+				sql = "UPDATE books SET book_noCopies = ? WHERE book_id = ?";
+			
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, nrExemplare - 1);
+				stmt.setInt(2,index);
+				
+				stmt.executeUpdate();
 			}
 			/* daca mai e un singur exemplar cartea se sterge */
 			else if (nrExemplare == 1 && nrExemplareImp == 0){
-				sql = "DELETE FROM books b WHERE b.book_id = '" + index + "'";
-				stmt.executeUpdate(sql);
+				sql = "DELETE FROM books b WHERE b.book_id = ?";
+				
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, index);
+				stmt.executeUpdate();
 			}
 
-		}catch(SQLException se){
-			//Handle errors for JDBC
-			se.printStackTrace();
-		}catch(Exception e){
-			//Handle errors for Class.forName
-			e.printStackTrace();
 		}finally{
 			//finally block used to close resources
 			try{
@@ -344,8 +337,10 @@ public class BooksService {
 	 * @param tipSortAuthor
 	 * @param tipSortTitle
 	 * @return
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public ArrayList<MyBook> getSortedListBooks(String sort, String tipSortAuthor, String tipSortTitle){
+	public ArrayList<MyBook> getSortedListBooks(String sort, String tipSortAuthor, String tipSortTitle) throws SQLException, ClassNotFoundException{
 		String sql;
 		ResultSet rs;
 
@@ -355,9 +350,6 @@ public class BooksService {
 
 			//STEP 3: Open a connection
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
-			//STEP 4: Execute a query
-			stmt = conn.createStatement();
 
 			/* daca nu e selectata nici o optiune de sortare */
 
@@ -388,12 +380,13 @@ public class BooksService {
 						}
 				}
 			}
-
-			rs = stmt.executeQuery(sql);
 			
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+
 			Author a;
 			MyBook b;
-		
+
 			while(rs.next()){
 
 				/* date din tabelul authors */
@@ -402,7 +395,7 @@ public class BooksService {
 				String autor_lastName = rs.getString("author_lastName");
 
 				a = new Author(autor_firstName, autor_lastName, author_id);
-				
+
 				/* date din tabelul books */
 				String book_title = rs.getString("book_title");
 				int nrExemplare  = rs.getInt("book_noCopies");
@@ -419,12 +412,6 @@ public class BooksService {
 
 			return books;
 
-		}catch(SQLException se){
-			//Handle errors for JDBC
-			se.printStackTrace();
-		}catch(Exception e){
-			//Handle errors for Class.forName
-			e.printStackTrace();
 		}finally{
 			//finally block used to close resources
 			try{
@@ -439,7 +426,5 @@ public class BooksService {
 				se.printStackTrace();
 			}//end finally try
 		}//end try
-
-		return books;
 	}
 }

@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -19,29 +20,36 @@ public class ClientSetings extends HttpServlet {
 		ClientService cService = new ClientService();
 
 		/* acceseaza vechile date din memorie */
-		User user = cService.getUserData(email);
-		
-		/* daca clientul vrea sa modifice doar un parte din nume */
-		if(firstName.isEmpty()){
+		User user;
+		RequestDispatcher view;
+		try {
+			user = cService.getUserData(email);
 			
-			if( !lastName.isEmpty() )
-				cService.modifyUserData(email,user.getFirstName(), lastName);
-		}
-		else
-			if(lastName.isEmpty()){
-				
-				if( !firstName.isEmpty() ){
-					cService.modifyUserData(email,firstName, user.getLastName());
-					
+			/* daca clientul vrea sa modifice doar un parte din nume */
+			if(firstName.isEmpty()){
+
+				if( !lastName.isEmpty() )
+					cService.modifyUserData(email,user.getFirstName(), lastName);
+			}
+			else
+				if(lastName.isEmpty()){
+
+					if( !firstName.isEmpty() ){
+						cService.modifyUserData(email,firstName, user.getLastName());
+
+					}
 				}
-			}
-			else if( !firstName.isEmpty() && !lastName.isEmpty()){
+				else if( !firstName.isEmpty() && !lastName.isEmpty()){
 					cService.modifyUserData(email,firstName, lastName);
-			}
+				}
 
-		request.setAttribute("userData", user);
+			request.setAttribute("userData", user);
+			view = request.getRequestDispatcher("/pageFormatJSP/pageJSP.jsp");
 
-		RequestDispatcher view = request.getRequestDispatcher("/pageJSP.jsp");
+		} catch (ClassNotFoundException | SQLException e) {
+			view = request.getRequestDispatcher("/pageFormatJSP/catchErrors.jsp");
+		}
+
 		view.forward(request, response);
 
 	}

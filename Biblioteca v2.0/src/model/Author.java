@@ -3,15 +3,15 @@ package model;
 public class Author {
 	private String firstName;
 	private String lastName;
-	private int index;
+	private int id;
 	
 	public Author(){
 	}
 	
-	public Author(String firstName, String lastName, int index){
+	public Author(String firstName, String lastName, int id){
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.index = index;
+		this.id = id;
 	}
 	
 	public void setFirstName(String firstName){
@@ -30,11 +30,11 @@ public class Author {
 		return lastName;
 	}
 	
-	public void setIndex(int index){
-		this.index = index;
+	public void setId(int id){
+		this.id = id;
 	}
 	
-	public int getIndex(){
-		return index;
+	public int getId(){
+		return id;
 	}
 }

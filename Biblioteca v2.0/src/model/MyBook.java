@@ -4,14 +4,12 @@ package model;
 public class MyBook {
 
 	private Author autor;
-	private String titlu;
-	private int index;
-	private int nrExemplare;
-	private int nrExemplareImprumutate;
+	private String title;
+	private int id;
+	private int noCopies;
+	private int noBorrowedCopies;
 
-	/* initializari */
 	public MyBook(){
-
 	}
 
 	public void setAutor(Author a){
@@ -22,48 +20,46 @@ public class MyBook {
 		return this.autor;
 	}
 
-	public void setTitlu(String titlu){
-		this.titlu = titlu;
+	public void setTitle(String title){
+		this.title = title;
 	}
 
-	public String getTitlu(){
-		return this.titlu;
+	public String getTitle(){
+		return this.title;
 	}
 
-	/* metoda actualizează numarul de exemplare care se adaugă */
-	public void setNrExemplare(int nr){
-		this.nrExemplare = nr;
+	public void setNoCopies(int nr){
+		this.noCopies = nr;
 	}
 
-	public int getNrExemplare(){
-		return this.nrExemplare;
+	public int getNoCopies(){
+		return this.noCopies;
 	}
 
-	public void setIndex(int index){
-		this.index = index;
+	public void setId(int id){
+		this.id = id;
 	}
 
-	public int getExemplare(){
-		return this.nrExemplare;
-	}
-
-	public int getNrExemplareImprumutate(){
-		return this.nrExemplareImprumutate;
-	}
-
-	/* metoda returnează index-ul la care a fost adaugata cartea */
-	public int getIndex(){
-		return index;
+	public int getId(){
+		return id;
 	}
 	
+	public void setNoBorrowedCopies(int noBorrowedCopies){
+		this.noBorrowedCopies = noBorrowedCopies;
+	}
+	
+	public int getNoBorrowedCopies(){
+		return this.noBorrowedCopies;
+	}
+
 	/* metoda inregistreaza o carte */
 	public void setBook(Author autor,String titlu,int index, int nrExemplare, int nrExemplareImprumutate){
 		
 		this.autor = autor;
-		this.titlu = titlu;
-		this.index = index;
-		this.nrExemplare = nrExemplare;
-		this.nrExemplareImprumutate = nrExemplareImprumutate;
+		this.title = titlu;
+		this.id = index;
+		this.noCopies = nrExemplare;
+		this.noBorrowedCopies = nrExemplareImprumutate;
 	}
 	
 	/* metoda verifica daca string-ul introdus poate fi convertit in int */

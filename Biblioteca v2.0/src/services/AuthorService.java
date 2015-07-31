@@ -14,7 +14,7 @@ public class AuthorService {
 	private static final String PASS = "sql";
 
 	private Connection conn = null;
-	private Statement stmt = null;
+	private PreparedStatement stmt = null;
 
 	private ArrayList<model.Author> authorsList;
 
@@ -25,8 +25,10 @@ public class AuthorService {
 	/**
 	 * functia returneaza lista de autori din baza de date
 	 * @return
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public ArrayList<Author> getAllAuthors(){
+	public ArrayList<Author> getAllAuthors() throws SQLException, ClassNotFoundException{
 		
 		try{
 			//STEP 2: Register JDBC driver
@@ -35,13 +37,12 @@ public class AuthorService {
 			//STEP 3: Open a connection
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-			//STEP 4: Execute a query
-			stmt = conn.createStatement();
-
 			/* preluare informatii din baza de date */
 			String sql = "SELECT author_id,author_firstName, author_lastName FROM authors";
-			ResultSet rs = stmt.executeQuery(sql);
-
+			stmt = conn.prepareStatement(sql);
+			
+			ResultSet rs = stmt.executeQuery();
+			
 			Author a;
 
 			while(rs.next()){
@@ -55,12 +56,6 @@ public class AuthorService {
 				authorsList.add(a);
 			}
 
-		}catch(SQLException se){
-			//Handle errors for JDBC
-			se.printStackTrace();
-		}catch(Exception e){
-			//Handle errors for Class.forName
-			e.printStackTrace();
 		}finally{
 			//finally block used to close resources
 			try{
@@ -87,8 +82,10 @@ public class AuthorService {
 	 * @param lastName
 	 * @return 2 - autorul exista in baza de date
 	 * 		   1 - autorul a fost adaugat in baza de date  
+	 * @throws ClassNotFoundException 
+	 * @throws SQLException 
 	 */
-	public int createAuthor(String firstName, String lastName){
+	public int createAuthor(String firstName, String lastName) throws ClassNotFoundException, SQLException{
 		String sql;
 
 		try{
@@ -97,35 +94,34 @@ public class AuthorService {
 
 			//STEP 3: Open a connection
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
-			//STEP 4: Execute a query
-			stmt = conn.createStatement();
-
+			
 			/* verificare daca autorul este deja adaugat */
-
-			sql = "SELECT author_id FROM authors WHERE author_firstName = '" + firstName + "' AND ";
-			sql += "author_lastName = '" + lastName + "'";
-
-			ResultSet rs = stmt.executeQuery(sql);
+			sql = "SELECT author_id FROM authors WHERE author_firstName = ? AND author_lastName = ?";
+			
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, firstName);
+			stmt.setString(2, lastName);
+			
+			ResultSet rs = stmt.executeQuery();
 
 			/* daca autorul introdus nu s-a gasit in baza de date se adauga */
 			if ( rs.next() ){
+				
 				return 2;
+			
 			}
 			else {
 				/* se adauga datele in sql */					
-				sql = "INSERT INTO authors (author_firstName, author_lastName) VALUES ('" + firstName + "','" + lastName + "')";
-
-				stmt.executeUpdate(sql);
+				sql = "INSERT INTO authors (author_firstName, author_lastName) VALUES (?,?)";
+				
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, firstName);
+				stmt.setString(2, lastName);
+			
+				stmt.executeUpdate();
 				return 1;
 			}
 
-		}catch(SQLException se){
-			//Handle errors for JDBC
-			se.printStackTrace();
-		}catch(Exception e){
-			//Handle errors for Class.forName
-			e.printStackTrace();
 		}finally{
 			//finally block used to close resources
 			try{
@@ -141,16 +137,17 @@ public class AuthorService {
 			}//end finally try
 		}//end try
 
-		return 0;
 	}
 	
 	/**
 	 * metoda returneaza valorile de la un anumit index din baza de date a autorilor
 	 * @param index
 	 * @return
+	 * @throws ClassNotFoundException 
+	 * @throws SQLException 
 	 */
-	public Author getSpecifiedAuthor(int index){
-		
+	public Author getSpecifiedAuthor(int idAuthor) throws ClassNotFoundException, SQLException{
+		Author author = new Author();
 		try{
 			//STEP 2: Register JDBC driver
 			Class.forName("org.postgresql.Driver");
@@ -158,14 +155,12 @@ public class AuthorService {
 			//STEP 3: Open a connection
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-			//STEP 4: Execute a query
-			stmt = conn.createStatement();
-
 			/* preluare informatii din baza de date */
-			String sql = "SELECT author_id,author_firstName, author_lastName FROM authors WHERE author_id = '" + index +"'";
-			ResultSet rs = stmt.executeQuery(sql);
-		
-			Author author = new Author();
+			String sql = "SELECT author_id,author_firstName, author_lastName FROM authors WHERE author_id = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, idAuthor);
+			
+			ResultSet rs = stmt.executeQuery();
 			while(rs.next()){
 
 				int id = rs.getInt("author_id");
@@ -175,24 +170,18 @@ public class AuthorService {
 				/* adaugare in lista */
 				author.setFirstName(firstName);
 				author.setLastName(lastName);
-				author.setIndex(id);
+				author.setId(id);
 			}
 			
 			return author;
 				
-		}catch(SQLException se){
-			//Handle errors for JDBC
-			se.printStackTrace();
-		}catch(Exception e){
-			//Handle errors for Class.forName
-			e.printStackTrace();
 		}finally{
 			//finally block used to close resources
 			try{
 				if(stmt!=null)
 					conn.close();
 			}catch(SQLException se){
-			}// do nothing
+			}// do nothing// do nothing
 			try{
 				if(conn!=null)
 					conn.close();
@@ -201,8 +190,6 @@ public class AuthorService {
 			}//end finally try
 		}//end try
 
-		return null;
-		
 	}
 	
 	/**
@@ -210,8 +197,10 @@ public class AuthorService {
 	 * @param firstNameM
 	 * @param lastNameM
 	 * @param index
+	 * @throws ClassNotFoundException 
+	 * @throws SQLException 
 	 */
-	public void modifyAuthor(String firstNameM, String lastNameM, int index){
+	public void modifyAuthor(String firstNameM, String lastNameM, int index) throws ClassNotFoundException, SQLException{
 		
 		try{
 			//STEP 2: Register JDBC driver
@@ -220,23 +209,18 @@ public class AuthorService {
 			//STEP 3: Open a connection
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-			//STEP 4: Execute a query
-			stmt = conn.createStatement();
-
 			String sql;
 
 			/* actualizeaza baza de date */
-			sql = "UPDATE authors SET author_firstName ='" + firstNameM + "', author_lastName = '" + lastNameM + "'";
-			sql += "WHERE author_id = '" + index + "'";
-			stmt.executeUpdate(sql);
+			sql = "UPDATE authors SET author_firstName = ?, author_lastName = ? WHERE author_id = ?";
 
-			
-		}catch(SQLException se){
-			//Handle errors for JDBC
-			se.printStackTrace();
-		}catch(Exception e){
-			//Handle errors for Class.forName
-			e.printStackTrace();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, firstNameM);
+			stmt.setString(2, lastNameM);
+			stmt.setInt(3, index);
+				
+			stmt.executeUpdate();
+
 		}finally{
 			//finally block used to close resources
 			try{
@@ -258,8 +242,10 @@ public class AuthorService {
 	 * si sterge in functie de rezultat
 	 * @param index
 	 * @return
+	 * @throws ClassNotFoundException 
+	 * @throws SQLException 
 	 */
-	public boolean deleteAuthor(int index){
+	public boolean deleteAuthor(int idAuthor) throws ClassNotFoundException, SQLException{
 		String sql;
 		
 		try{
@@ -269,12 +255,12 @@ public class AuthorService {
 			//STEP 3: Open a connection
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-			//STEP 4: Execute a query
-			stmt = conn.createStatement();
-			
 			/* verific daca autorul are carte in tabelul cu carti */
-			sql = "SELECT book_id FROM books WHERE book_author_id = '" + index +"'";
-			ResultSet rs = stmt.executeQuery(sql);
+			sql = "SELECT book_id FROM books WHERE book_author_id = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, idAuthor);
+			
+			ResultSet rs = stmt.executeQuery();
 			
 			if( rs.next() ){
 				/* autorul nu se poate sterge */
@@ -283,17 +269,14 @@ public class AuthorService {
 			
 			else{
 				/* stergere din baza de date */
-				sql = "DELETE FROM authors WHERE author_id = '" + index +"'";
-				stmt.executeUpdate(sql);
+				sql = "DELETE FROM authors WHERE author_id = ?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, idAuthor);
+				
+				stmt.executeUpdate();
 				return true;
 			}
 			
-		}catch(SQLException se){
-			//Handle errors for JDBC
-			se.printStackTrace();
-		}catch(Exception e){
-			//Handle errors for Class.forName
-			e.printStackTrace();
 		}finally{
 			//finally block used to close resources
 			try{
@@ -309,6 +292,5 @@ public class AuthorService {
 			}//end finally try
 		}//end try
 		
-		return false;
 	}
 }

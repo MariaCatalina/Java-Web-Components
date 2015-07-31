@@ -1,7 +1,7 @@
 package model;
 
 public class User {
-	private int index;
+	private int id;
 	private String email;
 	private String firstName;
 	private String lastName;
@@ -9,19 +9,19 @@ public class User {
 	public User(){
 	}
 	
-	public User (int index, String email, String firstName, String lastName){
-		this.index = index;
+	public User (int id, String email, String firstName, String lastName){
+		this.id = id;
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
 	
-	public void setIndex(int index){
-		this.index = index;
+	public void setId(int index){
+		this.id = index;
 	}
 	
-	public int getIndex(){
-		return index;
+	public int getId(){
+		return id;
 	}
 	
 	public void setEmail(String email){

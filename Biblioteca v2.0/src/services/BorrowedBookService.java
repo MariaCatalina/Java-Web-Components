@@ -1,14 +1,10 @@
 package services;
 
 import java.sql.*;
-import java.text.*;
 import java.util.*;
 import java.util.Date;
 
-import model.Author;
-import model.BorrowedBook;
-import model.MyBook;
-import model.User;
+import model.*;
 
 public class BorrowedBookService {
 	private static final String DB_URL = "jdbc:postgresql://localhost:5432/catalina";
@@ -18,7 +14,7 @@ public class BorrowedBookService {
 	private static final String PASS = "sql";
 
 	private Connection conn;
-	private Statement stmt;
+	private PreparedStatement stmt;
 
 	private ArrayList<BorrowedBook> borrowedB ;
 
@@ -31,8 +27,10 @@ public class BorrowedBookService {
 	/**
 	 * metoda uneste cele 4 tabele si extrage datele din ele
 	 * @return list cu carti imprumutate
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public ArrayList<BorrowedBook> getAllBorrowedBooks(){
+	public ArrayList<BorrowedBook> getAllBorrowedBooks() throws SQLException, ClassNotFoundException{
 		String sql;
 
 		model.MyBook b;
@@ -45,9 +43,6 @@ public class BorrowedBookService {
 			//STEP 3: Open a connection
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-			//STEP 4: Execute a query
-			stmt = conn.createStatement();
-
 			/* accesare baza de date */
 			sql = "SELECT book_id , a.author_id, a.author_firstName, a.author_lastName, borrowedbook_id,borrowedbook_date";
 			sql +=", book_title, book_noCopies, book_noBorrowedCopies, user_firstName, user_lastName,user_id,user_email FROM borrowedbooks ";
@@ -55,14 +50,12 @@ public class BorrowedBookService {
 			sql += " INNER JOIN authors a ON book_author_id = a.author_id ";
 			sql += " INNER JOIN users ON borrowedbook_user_id = user_id";
 
-			ResultSet rs = stmt.executeQuery(sql);
-
-			//STEP 5: Extract data from result set
+			stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
 
 			User u;
 			Author a;
 
-			//STEP 5: Extract data from result set
 			while(rs.next()){
 
 				/* date din tabelul authors */
@@ -103,12 +96,6 @@ public class BorrowedBookService {
 
 			return borrowedB;
 
-		}catch(SQLException se){
-			//Handle errors for JDBC
-			se.printStackTrace();
-		}catch(Exception e){
-			//Handle errors for Class.forName
-			e.printStackTrace();
 		}finally{
 			//finally block used to close resources
 			try{
@@ -124,16 +111,17 @@ public class BorrowedBookService {
 			}//end finally try
 		}//end try
 
-		return borrowedB;
 	}
 	
 	/**
 	 * 
 	 * @param indexBook
 	 * @param userEmail
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public void setBorrowedBook(int indexBook, String userEmail){
-		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	@SuppressWarnings("deprecation")
+	public void setBorrowedBook(int indexBook, String userEmail) throws SQLException, ClassNotFoundException{
 		Date dateT = new Date();
 		String sql;
 		
@@ -146,13 +134,13 @@ public class BorrowedBookService {
 			//STEP 3: Open a connection
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-			//STEP 4: Execute a query
-			stmt = conn.createStatement();
-
 			/* preluare index user in functie de email */
 			
-			sql = "SELECT user_id FROM users WHERE user_email = '" + userEmail + "'";
-			rs = stmt.executeQuery(sql);
+			sql = "SELECT user_id FROM users WHERE user_email = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, userEmail);
+			
+			rs = stmt.executeQuery();
 			
 			int indexUser = -1;
 			
@@ -161,9 +149,11 @@ public class BorrowedBookService {
 			}
 			
 			/* cautare in baza de date index-ul carti selectate pentru a lua numatrul de exemplare al cartii */
-			sql = "SELECT b.book_noCopies, b.book_noborrowedcopies FROM books b WHERE b.book_id = '" + indexBook + "'";
-
-			rs = stmt.executeQuery(sql);
+			sql = "SELECT b.book_noCopies, b.book_noborrowedcopies FROM books b WHERE b.book_id = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, indexBook);
+			
+			rs = stmt.executeQuery();
 
 			rs.next();
 			int nrExemplare  = rs.getInt("book_noCopies") ;
@@ -173,22 +163,25 @@ public class BorrowedBookService {
 			if( nrExemplare > nrExemplareImp){
 
 				/* actualizare numar de carti imprumutate */
-				sql = "UPDATE books SET book_noborrowedcopies = '" + (nrExemplareImp + 1) + "'" + "WHERE book_id = '" + indexBook + "'";
-				stmt.executeUpdate(sql);
+				sql = "UPDATE books SET book_noborrowedcopies = ? WHERE book_id = ?";
+				stmt =  conn.prepareStatement(sql);
+				stmt.setInt(1, nrExemplareImp + 1 );
+				stmt.setInt(2, indexBook);
+				
+				stmt.executeUpdate();
 
 				/* actualizare tabelul cartilor imprumutate */
-				sql = "INSERT INTO borrowedbooks (borrowedbook_user_id,borrowedbook_book_id,borrowedbook_date ) VALUES ('";
-				sql += indexUser + "','" + indexBook + "','" + dateFormat.format(dateT) + "')";
-				stmt.executeUpdate(sql);
+				sql = "INSERT INTO borrowedbooks (borrowedbook_user_id,borrowedbook_book_id,borrowedbook_date ) VALUES ( ? ,?, ? )";
+				
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, indexUser);
+				stmt.setInt(2, indexBook);
+				stmt.setDate(3, new java.sql.Date(dateT.getDate()));
+				
+				stmt.executeUpdate();
 
 			}
-
-		}catch(SQLException se){
-			//Handle errors for JDBC
-			se.printStackTrace();
-		}catch(Exception e){
-			//Handle errors for Class.forName
-			e.printStackTrace();
+			
 		}finally{
 			//finally block used to close resources
 			try{
@@ -206,7 +199,7 @@ public class BorrowedBookService {
 
 	}
 	
-	public ArrayList<BorrowedBook> getSpecifiedBorrowedBooks(String emailUser){
+	public ArrayList<BorrowedBook> getSpecifiedBorrowedBooks(String emailUser) throws SQLException, ClassNotFoundException{
 		String sql;
 
 		MyBook b;
@@ -219,17 +212,16 @@ public class BorrowedBookService {
 			//STEP 3: Open a connection
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-			//STEP 4: Execute a query
-			stmt = conn.createStatement();
-
-			/* accesare baza de date */
 			sql = "SELECT book_id , a.author_id, a.author_firstName, a.author_lastName, borrowedbook_id,borrowedbook_date";
 			sql +=", book_title, book_noCopies, book_noBorrowedCopies, user_firstName, user_lastName,user_id,user_email FROM borrowedBooks ";
 			sql += "INNER JOIN books ON book_id = borrowedbook_book_id ";
 			sql += "INNER JOIN authors a ON book_author_id = a.author_id ";
-			sql += "INNER JOIN users ON borrowedbook_user_id = user_id WHERE user_email = '" + emailUser + "'";
-
-			ResultSet rs = stmt.executeQuery(sql);
+			sql += "INNER JOIN users ON borrowedbook_user_id = user_id WHERE user_email = ?";
+			
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, emailUser);
+			
+			ResultSet rs = stmt.executeQuery();
 
 			//STEP 5: Extract data from result set
 
@@ -277,12 +269,6 @@ public class BorrowedBookService {
 
 			return borrowedB;
 
-		}catch(SQLException se){
-			//Handle errors for JDBC
-			se.printStackTrace();
-		}catch(Exception e){
-			//Handle errors for Class.forName
-			e.printStackTrace();
 		}finally{
 			//finally block used to close resources
 			try{
@@ -298,14 +284,15 @@ public class BorrowedBookService {
 			}//end finally try
 		}//end try
 
-		return borrowedB;
 	}
 	
 	/**
 	 * metoda este apelata cand se seturneaza o carte si se modifica numerul de carti imprumutate
 	 * @param indexBBook
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public void returnBorrowedBook(int indexBBook){
+	public void returnBorrowedBook(int indexBBook) throws SQLException, ClassNotFoundException{
 		ResultSet rs;
 		String sql;
 
@@ -316,12 +303,12 @@ public class BorrowedBookService {
 			//STEP 3: Open a connection
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-			//STEP 4: Execute a query
-			stmt = conn.createStatement();
-
 			/* cautare in baza de date a tabeluli borrowedBooks indexul cartii cerute */
-			sql = "SELECT borrowedbook_book_id FROM borrowedbooks WHERE borrowedbook_id = '" + indexBBook + "'";
-			rs = stmt.executeQuery(sql);
+			sql = "SELECT borrowedbook_book_id FROM borrowedbooks WHERE borrowedbook_id = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, indexBBook);
+			
+			rs = stmt.executeQuery();
 			
 			int indexBook = -1;
 			
@@ -329,26 +316,30 @@ public class BorrowedBookService {
 			indexBook = rs.getInt("borrowedbook_book_id");
 			
 			/* cautare in baza de date index-ul carti selectate pentru a lua numatrul de exemplare al cartii */
-			sql = "SELECT book_id ,book_noBorrowedCopies FROM books WHERE book_id = '" + indexBook + "'";
-			rs = stmt.executeQuery(sql);
+			sql = "SELECT book_id ,book_noBorrowedCopies FROM books WHERE book_id = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, indexBook);
+		
+			rs = stmt.executeQuery();
 
 			rs.next();
 			int nrExemplareImp  = rs.getInt("book_noBorrowedCopies") ;
 			
 			/* actualizare numar de carti imprumutate din tabelul books*/
-			sql = "UPDATE books SET book_noBorrowedCopies = '" + (nrExemplareImp - 1) + "'" + "WHERE book_id = '" + indexBook + "'";
-			stmt.executeUpdate(sql);
+			sql = "UPDATE books SET book_noBorrowedCopies = ? WHERE book_id = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, nrExemplareImp - 1);
+			stmt.setInt(2, indexBook);
+			
+			stmt.executeUpdate();
 
 			/* actualizare tabelul cartilor imprumutate */
-			sql = "DELETE FROM borrowedbooks WHERE borrowedbook_id = '" + indexBBook + "'";
-			stmt.executeUpdate(sql);
+			sql = "DELETE FROM borrowedbooks WHERE borrowedbook_id = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, indexBBook);
+			
+			stmt.executeUpdate();
 
-		}catch(SQLException se){
-			//Handle errors for JDBC
-			se.printStackTrace();
-		}catch(Exception e){
-			//Handle errors for Class.forName
-			e.printStackTrace();
 		}finally{
 			//finally block used to close resources
 			try{

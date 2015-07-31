@@ -7,7 +7,7 @@
 
 <servlet>
 	<servlet-name>SA</servlet-name>
-	<jsp-file>/pageJSP.jsp</jsp-file>
+	<jsp-file>/pageFormatJSP/pageJSP.jsp</jsp-file>
 </servlet>
 
 <servlet-mapping>
@@ -18,7 +18,7 @@
 <!-- servlet pentru adaugare carte -->
 <servlet>
 	<servlet-name>AddB</servlet-name>
-	<servlet-class>servlets.AddBook</servlet-class>
+	<servlet-class>servlets.addData.AddBook</servlet-class>
 </servlet>
 <servlet-mapping>
 	<servlet-name>AddB</servlet-name>
@@ -28,7 +28,7 @@
 <!-- url pentru afisarea cartilor pentru admin -->
  <servlet>
 	<servlet-name>ListaB</servlet-name>
-	<servlet-class>servlets.BooksList</servlet-class>
+	<servlet-class>servlets.listData.BooksList</servlet-class>
 </servlet>
 <servlet-mapping>
 	<servlet-name>ListaB</servlet-name>
@@ -38,7 +38,7 @@
 <!-- url pentru lista de carti pentru user -->
  <servlet>
 	<servlet-name>ListaUser</servlet-name>
-	<servlet-class>servlets.ListaCartiUser</servlet-class>
+	<servlet-class>servlets.listData.UserBooksList</servlet-class>
 </servlet>
 <servlet-mapping>
 	<servlet-name>ListaUser</servlet-name>
@@ -48,7 +48,7 @@
 <!-- butonul imprumuta -->
  <servlet>
 	<servlet-name>CarteImp</servlet-name>
-	<servlet-class>servlets.Imprumuta</servlet-class>
+	<servlet-class>servlets.modifyData.Imprumuta</servlet-class>
 </servlet>
 <servlet-mapping>
 	<servlet-name>CarteImp</servlet-name>
@@ -58,7 +58,7 @@
 <!-- lista cartilor imprumutate pt admin -->
  <servlet>
 	<servlet-name>LCarteImp</servlet-name>
-	<servlet-class>servlets.ListaCartiImprumutate</servlet-class>
+	<servlet-class>servlets.listData.BorrowedBooksList</servlet-class>
 </servlet>
 <servlet-mapping>
 	<servlet-name>LCarteImp</servlet-name>
@@ -68,7 +68,7 @@
 <!-- lista carti imprumutate de user -->
  <servlet>
 	<servlet-name>LSpUser</servlet-name>
-	<servlet-class>servlets.ListaSpUser</servlet-class>
+	<servlet-class>servlets.listData.SpecifiedUserList</servlet-class>
 </servlet>
 <servlet-mapping>
 	<servlet-name>LSpUser</servlet-name>
@@ -78,7 +78,7 @@
 <!-- butonul returneaza  -->
  <servlet>
 	<servlet-name>Return</servlet-name>
-	<servlet-class>servlets.Returneaza</servlet-class>
+	<servlet-class>servlets.modifyData.Returneaza</servlet-class>
 </servlet>
 <servlet-mapping>
 	<servlet-name>Return</servlet-name>
@@ -88,7 +88,7 @@
 <!-- lista de autori -->
 <servlet>
 	<servlet-name>ListAutors</servlet-name>
-	<servlet-class>servlets.AuthorsList</servlet-class>
+	<servlet-class>servlets.listData.AuthorsList</servlet-class>
 </servlet>
 <servlet-mapping>
 	<servlet-name>ListAutors</servlet-name>
@@ -98,7 +98,7 @@
 <!-- buton adauga autor -->
 <servlet>
 	<servlet-name>AddAuthor</servlet-name>
-	<servlet-class>servlets.AddAuthor</servlet-class>
+	<servlet-class>servlets.addData.AddAuthor</servlet-class>
 </servlet>
 <servlet-mapping>
 	<servlet-name>AddAuthor</servlet-name>
@@ -107,7 +107,7 @@
 
 <servlet>
 	<servlet-name>AddedAuthor</servlet-name>
-	<jsp-file>/AddedAuthor.jsp</jsp-file>
+	<jsp-file>/addDataJSP/AddedAuthor.jsp</jsp-file>
 </servlet>
 <servlet-mapping>
 	<servlet-name>AddedAuthor</servlet-name>
@@ -117,7 +117,7 @@
 <!-- url before add book -->
 <servlet>
 	<servlet-name>BAddBook</servlet-name>
-	<servlet-class>servlets.ListBeforeAddBook</servlet-class>
+	<servlet-class>servlets.addData.ListBeforeAddBook</servlet-class>
 </servlet>
 <servlet-mapping>
 	<servlet-name>BAddBook</servlet-name>
@@ -127,7 +127,7 @@
 <!-- servlet pentru butoanele modifica / sterge -->
 <servlet>
 	<servlet-name>Button</servlet-name>
-	<servlet-class>servlets.ActionsButtonsAuthor</servlet-class>
+	<servlet-class>servlets.modifyData.ActionsButtonsAuthor</servlet-class>
 </servlet>
 <servlet-mapping>
 	<servlet-name>Button</servlet-name>
@@ -137,7 +137,7 @@
 <!-- servlet pt modificare autor -->
 <servlet>
 	<servlet-name>ModifyA</servlet-name>
-	<servlet-class>servlets.ModifyAuthor</servlet-class>
+	<servlet-class>servlets.modifyData.ModifyAuthor</servlet-class>
 </servlet>
 <servlet-mapping>
 	<servlet-name>ModifyA</servlet-name>
@@ -157,7 +157,7 @@
 <!-- butoanele de la lista de carti -->
 <servlet>
 	<servlet-name>ABB</servlet-name>
-	<servlet-class>servlets.ActionsButtonsBooks</servlet-class>
+	<servlet-class>servlets.modifyData.ActionsButtonsBooks</servlet-class>
 </servlet>
 <servlet-mapping>
 	<servlet-name>ABB</servlet-name>
@@ -167,7 +167,7 @@
 <!-- clasa unde se modifica o carte -->
 <servlet>
 	<servlet-name>ModBook</servlet-name>
-	<servlet-class>servlets.ModifyBook</servlet-class>
+	<servlet-class>servlets.modifyData.ModifyBook</servlet-class>
 </servlet>
 <servlet-mapping>
 	<servlet-name>ModBook</servlet-name>
@@ -186,8 +186,7 @@
 </filter-mapping>
 
 <welcome-file-list>
-	<welcome-file>/index</welcome-file>
-	<welcome-file>/indexClient</welcome-file>
+	<welcome-file>index</welcome-file>
 </welcome-file-list>
 
  <!-- SECURITY ROLE -->
@@ -230,7 +229,7 @@
 		<url-pattern>/ListaCartiImprumutate</url-pattern>
 		<url-pattern>/AddBook</url-pattern>
 		<url-pattern>/ListAuthors</url-pattern>
-		<url-pattern>/AddAuthor.jsp</url-pattern>
+		<url-pattern>/addDataJSP/AddAuthor.jsp</url-pattern>
 	
 		<http-method>GET</http-method>
 		<http-method>POST</http-method>
@@ -250,8 +249,8 @@
       <auth-method>FORM</auth-method>
 	<realm-name>Example Form-Based Authentication Area</realm-name>
       <form-login-config>
-        <form-login-page>/login.jsp</form-login-page>
-        <form-error-page>/error.jsp</form-error-page>
+        <form-login-page>/pageFormatJSP/login.jsp</form-login-page>
+        <form-error-page>/pageFormatJSP/error.jsp</form-error-page>
       </form-login-config>
 </login-config>
 	

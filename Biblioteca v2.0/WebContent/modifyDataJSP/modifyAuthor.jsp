@@ -17,19 +17,16 @@
 	
 <br>
 <center>
-	
-	<em>Change your name: </em> <br><br>
-	
-	<form action="Setings" method="post">
+
+	<form action="modifyedAuthor" method="get">
 		
-		<input type="hidden" name="userID" value="${userData.id }">
-		First Name: <input type="text" name="FirstNameC" value="${userData.firstName }"><br> 
-		Last Name: <input type="text" name="LastNameC" value="${userData.lastName }"><br>
+		<input type="hidden" name="authorIndexM" value="${modifyAuthor.id }">
+		First Name: <input type="text" name="FirstNameM" value="${modifyAuthor.firstName }"><br> 
+		Last Name: <input type="text" name="LastNameM" value="${modifyAuthor.lastName }"><br>
 
 		<br>
 
-		<button type="submit" style=" width: 8em;  height: 2em; text-align:center;
-									border: 3px;">Save</button>
+		<button type="submit">Save</button>
 	</form>
 </center>
 </body>

@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class BorrowedBook {
 	
-	private int index;
+	private int id;
 	private Date date;
 	private MyBook book; 
 	private User user;
@@ -27,16 +27,15 @@ public class BorrowedBook {
 		return date;
 	}
 	
-	public int getIndex(){
-		return index;
+	public int getId(){
+		return id;
 	}
 	/* metoada inregistreaza o carte imprumutata de un user */
-	public void setBorrowedBook(User user,MyBook book, int index, Date data){
-	
+	public void setBorrowedBook(User user,MyBook book, int id, Date data){
 		this.user = user;
 		this.book = book;
 		this.date = data;
-		this.index = index;
+		this.id = id;
 	}
 	
 }
